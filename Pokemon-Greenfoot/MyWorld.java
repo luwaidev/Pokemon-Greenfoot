@@ -63,17 +63,21 @@ public class MyWorld extends World
     private int total;
     private long seconds;
 
+    private boolean boy;
+    
     private GreenfootImage gridLines;
 
     /**
      * Constructor for objects of class MyWorld.
      * 
      */
-    public MyWorld()
+    public MyWorld(boolean boy)
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(800, 600, 1); 
 
+        this.boy = boy;
+        
         //StaticTimer.start();
         
         setPaintOrder (UIObject.class, SuperWindow.class, Player.class);
