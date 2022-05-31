@@ -74,44 +74,19 @@ public class MyWorld extends World
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(800, 600, 1); 
 
-        StaticTimer.start();
+        //StaticTimer.start();
         
         setPaintOrder (UIObject.class, SuperWindow.class, Player.class);
         setActOrder (World.class);
         
         Greenfoot.setSpeed(50);
 
-        gridLines = Utility.drawSpace (800, 600, 100);
-        setBackground(gridLines);
+        //gridLines = Utility.drawSpace (800, 600, 100);
+        //setBackground(gridLines);
 
         funFont = new Font ("Comic Sans MS", false, false, 16);
         boringFont = new Font ("Times New Roman", false, false, 18);
 
- 
-
-        player = new Player ();
-        addObject(player, 400, 300);
-        
-        counter = 0;
-        countdown = 0;
-        maxCount = 1;
-
-        results = new float [20000];
-        String[] tempText = {"Welcome to the Library of Useful Code!","By Jordan Cohen, Pierre Elliott Trudeau HS", "Markham, Ontario, Canada","Feel free to reach out with questions.", "jordan.cohen@yrdsb.ca"};
-        testBox = new SuperTextBox(tempText, Color.BLACK, Color.WHITE, boringFont, true, 500, 3, Color.YELLOW);
-        
-        testBox.update();
-        int tempY = getHeight() - testBox.getImage().getHeight()/2;
-        int tempX = testBox.getImage().getWidth()/2;
-        addObject(testBox, tempX, tempY);
-
-        // TEST - DELETE
-        SuperWindow testWidget = new SuperWindow(240, 240, "Widget 0.1");
-        addObject (testWidget, 600, 200);
-        
-        SuperTextBox widgetText = new SuperTextBox ("Testing 123",  funFont, 236);
-        testWidget.addActor (widgetText, 2, 204);
-        
     }
 
 
