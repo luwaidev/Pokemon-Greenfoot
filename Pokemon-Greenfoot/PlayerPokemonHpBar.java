@@ -12,8 +12,16 @@ public class PlayerPokemonHpBar extends Battle
      * Act - do whatever the PlayerPokemonHpBar wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
+    GreenfootImage image = new GreenfootImage("images/BattleImages/HPPlayer.png");
+    
+    public PlayerPokemonHpBar(){
+        setImage(image);
+    }
+    
     public void act()
     {
-        // Add your action code here.
+        if(getY() > 250){
+            setLocation(getX(), getY() - 1);
+        }
     }
 }
