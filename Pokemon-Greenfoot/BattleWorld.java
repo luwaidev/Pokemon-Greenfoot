@@ -16,12 +16,13 @@ public class BattleWorld extends World
     public BattleWorld()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
-        super(600, 400, 1); 
+        super(600, 500, 1); 
         setBackground("images/BattleImages/routeBackground.jpeg");
         
         
-        addObject(new PokeBall(), 0, 175); //coords for adding pokeBall
-        addObject(new PlayerPokemonHpBar(), 468, 380);
+        addObject(new PokeBall(), 0, 275); //coords for adding pokeBall
+        addObject(new PlayerPokemonHpBar(), 468, 480);
+        addObject(new EnemyHpBar(), 100, 37);
         /*
          * startObjects()
          * addMenu()
