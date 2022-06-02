@@ -260,7 +260,7 @@ public class TitleScreen extends World
                     }
                 }
             }
-            MyWorld world = new MyWorld(boy);
+            Town world = new Town(boy);
             Greenfoot.setWorld(world);
         }
     }

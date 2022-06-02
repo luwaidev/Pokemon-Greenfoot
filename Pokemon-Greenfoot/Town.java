@@ -44,15 +44,15 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * @author Jordan Cohen 
  * @version 1.0.5
  */
-public class MyWorld extends World
+public class Town extends World
 {
- 
+
     private SuperTextBox testBox;
-    
+
     private MouseInfo m;
-    
+
     private Player player;
-    
+
     private Font funFont, boringFont;
     private int counter, maxCount, countdown;
 
@@ -64,35 +64,38 @@ public class MyWorld extends World
     private long seconds;
 
     private boolean boy;
-    
+    private boolean moving;
+
     private GreenfootImage gridLines;
 
+    private int[][] theMovementGrid;
     /**
      * Constructor for objects of class MyWorld.
      * 
      */
-    public MyWorld(boolean boy)
+    public Town(boolean boy)
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(800, 600, 1); 
 
         this.boy = boy;
-        
-        //StaticTimer.start();
-        
-        setPaintOrder (UIObject.class, SuperWindow.class, Player.class);
-        setActOrder (World.class);
-        
-        Greenfoot.setSpeed(50);
 
-        //gridLines = Utility.drawSpace (800, 600, 100);
-        //setBackground(gridLines);
+        //this is the movement grid that we are going to use 
+        //loop through and make everything a 1 for now
+        //where there are objects that cannot be passed, make the value 0
+        //where there are pokemon, or interactable objects we can make them 2 or 3 etc.
+        theMovementGrid = new int[800][600];
+        for (int i = 0; i < 800; i++)
+        {
+            for (int j = 0; j < 600; j++)
 
-        funFont = new Font ("Comic Sans MS", false, false, 16);
-        boringFont = new Font ("Times New Roman", false, false, 18);
-
+            {
+                theMovementGrid[i][j] = 1;
+            }
+        }
+        player = new Player();
+        addObject(player, getWidth()/2,getHeight()/2);
     }
-
 
     /**
      * Sharing mouseInfo is important.
@@ -106,19 +109,68 @@ public class MyWorld extends World
      * @return MouseInfo the current state of the mouse as captured by World at the start of this act
      */
     public MouseInfo getMouseInfo() {
-          if (m == null){
-              m = Greenfoot.getMouseInfo();
-          }
+        if (m == null){
+            m = Greenfoot.getMouseInfo();
+        }
         return m;
     }
 
-    public void started (){
-       
-        total = 20;
+    private void checkKeys(){
+        if(!moving){
+            if (Greenfoot.isKeyDown("right")){
+                try{
+                    if(theMovementGrid[player.getX()+1][player.getY()] == 1)
+                    {
+                        moving = true;
+                        player.setLocation(player.getX()+1, player.getY());
+                        moving = false;
+                    }
+                } catch (ArrayIndexOutOfBoundsException e)
+                {
+
+                }
+            } else if (Greenfoot.isKeyDown("left")){
+                try{
+                    if(theMovementGrid[player.getX()-1][player.getY()] == 1)
+                    {
+                        moving = true;
+                        player.setLocation(player.getX()-1, player.getY());
+                        moving = false;
+                    }
+                } catch (ArrayIndexOutOfBoundsException e)
+                {
+
+                }
+            } else if (Greenfoot.isKeyDown("up")){
+                try{
+                    if(theMovementGrid[player.getX()][player.getY()-1] == 1)
+                    {
+                        moving = true;
+                        player.setLocation(player.getX(), player.getY()-1);
+                        moving = false;
+                    }
+                } catch (ArrayIndexOutOfBoundsException e)
+                {
+
+                }
+            } else if (Greenfoot.isKeyDown("down")) {
+                try{
+                    if(theMovementGrid[player.getX()][player.getY()+1] == 1)
+                    {
+                        moving = true;
+                        player.setLocation(player.getX(), player.getY()+1);
+                        moving = false;
+                    }
+                } catch (ArrayIndexOutOfBoundsException e)
+                {
+
+                }
+            }
+        }
     }
 
-
     public void act () {
-       m = Greenfoot.getMouseInfo();
+        m = Greenfoot.getMouseInfo();
+        checkKeys();
     }
 }

@@ -135,7 +135,7 @@ public class SuperWindow extends Actor
 
     public void act()
     {
-        mouseInfo = ((MyWorld)getWorld()).getMouseInfo(); // see World for corresponding method and note
+        mouseInfo = ((Town)getWorld()).getMouseInfo(); // see World for corresponding method and note
         // Offsets so that top left corner of window is 0, 0
         int xOffset = getX() - (width / 2);
         int yOffset = getY() - (currentHeight / 2);
