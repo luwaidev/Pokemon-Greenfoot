@@ -20,9 +20,9 @@ public class BattleWorld extends World
         setBackground("images/BattleImages/routeBackground.jpeg");
         
         
-        addObject(new PokeBall(), 0, 275); //coords for adding pokeBall
-        addObject(new PlayerPokemonHpBar(), 468, 480);
-        addObject(new EnemyHpBar(), 100, 37);
+         //coords for adding pokeBall
+        
+        addObject(new Trainer(), 300, 350);
         /*
          * startObjects()
          * addMenu()

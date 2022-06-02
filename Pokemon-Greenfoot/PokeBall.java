@@ -23,11 +23,13 @@ public class PokeBall extends Battle
     public void act()
     {
         a++;
-        if(getX() < 175){
-            setLocation(getX() + 1, getY() + 1);
-            turn(3);
+        if(getX() < 200){
+            if(a % 2 == 0){
+                setLocation(getX() + 1, getY() + 1);
+            }
+            turn(6);
         }
-        if(getX() >= 175){
+        if(getX() >= 200){
             setRotation(0);
         }
         if(a == 200){
@@ -35,6 +37,10 @@ public class PokeBall extends Battle
         }
         if(a == 245){
             setImage("images/BattleImages/openedPokeBall.png");
+        }
+        if(a == 270){
+            getWorld().addObject(new PokeBallExplosion(), this.getX(), this.getY());
+            getWorld().removeObject(this);
         }
     }
 }
