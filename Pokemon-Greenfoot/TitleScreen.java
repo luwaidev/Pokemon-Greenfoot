@@ -12,26 +12,37 @@ public class TitleScreen extends World
 {
     //the font that is used for everything
     Font boringFont = new Font ("Times New Roman", false, false, 14);
-    
+
     //these variables keep track of the mouse's position on the screen
     private int mx = 0;
     private int my = 0;
-    
+
     private boolean boy;
-    
-    
+
     SuperTextBox boyButton;
     SuperTextBox girlButton;
-    
+
     //these arraylists keep track of all the differen types of option buttons for each type of componenet
     ArrayList<SuperTextBox> gender;
-    
+
     //these rectangles are the shaded boxes that show up on selected options on the screen
     Rectangle genderSelected;
-    
+
     //this is the background for the titlescreen
-    GreenfootImage background = new GreenfootImage("TitleBackground.png");
-    
+    GreenfootImage background = new GreenfootImage("titleBackground.jpg");
+    GreenfootImage pokemonPic = new GreenfootImage("Pokemonlogo.png");
+
+    Label label2;
+    Label label3;
+
+    private int transparencies;
+
+    TitlePictures pokemon;
+
+    private boolean doneIntro;
+
+    private int pokemonWidth;
+    private int pokemonHeight;
     /**
      * Constructor for objects of class TitleScreen.
      * 
@@ -40,30 +51,100 @@ public class TitleScreen extends World
     {    
         // Create a new world with 800x500 cells with a cell size of 1x1 pixels.
         super(800, 500, 1); 
-        
+
         //sets the background
-        //setBackground(background);
-        
+        setBackground(background);
+
+        doneIntro = false;
+
+        pokemon = new TitlePictures();
+        pokemon.setImage(pokemonPic);
+        pokemonPic.scale(10,5);
+        addObject(pokemon,0,125);
+
+        transparencies = 0;
+
+        pokemonWidth = pokemonPic.getWidth();
+        pokemonHeight = pokemonPic.getHeight();
+
         //gets all the items on screen ready
         prepare();
-        
+
         //addObject(new SoundPlayer(), 1000, 1000);
     }
-    
+
+    public void pokemonOntoScreen()
+    {
+        if(pokemonWidth < 790)
+        {
+            pokemonWidth+=10;
+            pokemonHeight+=5;
+            GreenfootImage image = new GreenfootImage("Pokemonlogo.png");
+            image.scale(pokemonWidth, pokemonHeight);
+            pokemon.setImage(image);
+        } 
+        if(pokemon.getX() < 400)
+        {
+            pokemon.move(6);
+        }
+        if(transparencies < 253)
+        {
+            transparencies+= 3;
+            label2.getImage().setTransparency(transparencies);
+            label3.getImage().setTransparency(transparencies);
+        } else
+        {
+            doneIntro = true;
+            putSelections();
+        }
+    }
+
     /**
      * The main world act loop
      * keeps track of everything that happens and allows user to interact
      */
     public void act()
     {
-        //method that checks for user clicking options
-        checkForSelection();
-        //method that darkens options that have been selected
-        showSelection();
-        //starts game with selected options if user presses <space>
-        startMethod();
+        if(!doneIntro)
+        {
+            pokemonOntoScreen();
+        }
+        else
+        {
+            //method that checks for user clicking options
+            checkForSelection();
+            //method that darkens options that have been selected
+            showSelection();
+            //starts game with selected options if user presses <space>
+            startMethod();
+        }
+
     }
-    
+
+    public void putSelections()
+    {
+
+        //adding boxes that you can click for customizing
+        //cherry buttons
+        //sets buttons' values corresponding to the values set in the variables created during initialization
+        boyButton = new SuperTextBox("Boy",Color.WHITE, Color.BLACK, boringFont,true,this.getWidth()/30,1,Color.BLACK); 
+        addObject(boyButton, getWidth()/3, getHeight()*5/6);
+        girlButton = new SuperTextBox("Girl",Color.WHITE, Color.BLACK, boringFont,true,this.getWidth()/30,1,Color.BLACK); 
+        addObject(girlButton,getWidth()*2/3, getHeight()*5/6);
+
+        //first option default to selected
+        boyButton.setIsSelected(true);
+
+        //add each button to the corresponding arraylist
+        gender = new ArrayList<SuperTextBox>();
+        gender.add(boyButton);
+        gender.add(girlButton);
+
+        //creates the grey box that signifies selection on top of the first button
+        genderSelected = new Rectangle(boyButton.getWidth(),boyButton.getHeight(), 128);
+        addObject(genderSelected,boyButton.getX(),boyButton.getY());
+    }
+
     /**
      * Prepare the world for the start of the program.
      * That is: create the labels to show the name of the game
@@ -72,37 +153,16 @@ public class TitleScreen extends World
     private void prepare()
     {
         // labels for title
-        Label label = new Label("(more) Trash Pokemon", 50);
-        addObject(label,getWidth()/2,getHeight()/4);
-        label.setFillColor(Color.BLACK);
-        Label label2 = new Label("Press <space> to start", 40);
+        label2 = new Label("Press <space> to start", 40);
         addObject(label2,getWidth()/2,getHeight()*2/4);
         label2.setFillColor(Color.BLACK);
-        Label label3 = new Label("Choose your gender(based off pokemon plz don't cancel me):", 30);
+        label2.getImage().setTransparency(0);
+        label3 = new Label("Choose your gender(based off pokemon plz don't cancel me):", 30);
         label3.setFillColor(Color.BLACK);
+        label3.getImage().setTransparency(0);
         addObject(label3,getWidth()/2,getHeight()*3/4);
-        
-        //adding boxes that you can click for customizing
-        //cherry buttons
-        //sets buttons' values corresponding to the values set in the variables created during initialization
-        boyButton = new SuperTextBox("Boy",Color.WHITE, Color.BLACK, boringFont,true,this.getWidth()/30,1,Color.BLACK); 
-        addObject(boyButton, getWidth()/3, getHeight()*5/6);
-        girlButton = new SuperTextBox("Girl",Color.WHITE, Color.BLACK, boringFont,true,this.getWidth()/30,1,Color.BLACK); 
-        addObject(girlButton,getWidth()*2/3, getHeight()*5/6);
-        
-        //first option default to selected
-        boyButton.setIsSelected(true);
-        
-        //add each button to the corresponding arraylist
-        gender = new ArrayList<SuperTextBox>();
-        gender.add(boyButton);
-        gender.add(girlButton);
-        
-        //creates the grey box that signifies selection on top of the first button
-        genderSelected = new Rectangle(boyButton.getWidth(),boyButton.getHeight(), 128);
-        addObject(genderSelected,boyButton.getX(),boyButton.getY());
     }
-    
+
     /**
      * This method with activate when the user clicks on a button they want to select
      * and deselect the options that were not chosen
@@ -119,8 +179,8 @@ public class TitleScreen extends World
                 //if the mouse is clicked, check where the mouse is
                 MouseInfo mouse = Greenfoot.getMouseInfo();
                 if(mouse!=null){
-                   mx = mouse.getX();
-                   my = mouse.getY();
+                    mx = mouse.getX();
+                    my = mouse.getY();
                 }
                 //create a tiny invisible rectangle at the location of the mouse press 
                 Rectangle checker = new Rectangle(1,1,0);
@@ -150,7 +210,7 @@ public class TitleScreen extends World
             }
         }
     }
-    
+
     /**
      * This method will check if buttons are selected and make them darker to show selection
      */
@@ -176,7 +236,7 @@ public class TitleScreen extends World
             }
         }
     }
-    
+
     /**
      * this method will transition the simulation from title screen into the actual simulation when space bar is pressed
      */
@@ -200,16 +260,16 @@ public class TitleScreen extends World
                     }
                 }
             }
+            MyWorld world = new MyWorld(boy);
+            Greenfoot.setWorld(world);
         }
-        MyWorld world = new MyWorld(boy);
-        Greenfoot.setWorld(world);
     }
-    
+
     public void started () {
+        pokemonPic.scale(200,100);
         //SoundPlayer.instance.playBackgroundMusic();
     }
-    
-    
+
     public void stopped () {
         //SoundPlayer.instance.stopBackgroundMusic();
     }
