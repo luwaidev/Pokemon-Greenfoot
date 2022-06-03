@@ -66,6 +66,10 @@ public class Town extends World
     private boolean boy;
     private boolean moving;
 
+    private double worldFactor = 0.3;
+    private int gridX;
+    private int gridY;
+    
     private GreenfootImage gridLines;
 
     private int[][] theMovementGrid;
@@ -79,16 +83,19 @@ public class Town extends World
         super(800, 600, 1); 
 
         this.boy = boy;
-
+        
+        //makes grid with dimensions factored into the world
+        gridX = (int)(800.00*worldFactor);
+        gridY = (int)(600.00*worldFactor);
+        
         //this is the movement grid that we are going to use 
         //loop through and make everything a 1 for now
         //where there are objects that cannot be passed, make the value 0
         //where there are pokemon, or interactable objects we can make them 2 or 3 etc.
-        theMovementGrid = new int[800][600];
-        for (int i = 0; i < 800; i++)
+        theMovementGrid = new int[gridX][gridY];
+        for (int i = 0; i < gridX; i++)
         {
-            for (int j = 0; j < 600; j++)
-
+            for (int j = 0; j < gridY; j++)
             {
                 theMovementGrid[i][j] = 1;
             }
@@ -116,13 +123,18 @@ public class Town extends World
     }
 
     private void checkKeys(){
+        double moveX = (800.00/gridX);
+        double moveY = (600.00/gridY);
+        int playerX = (int)(player.getX()/moveX);
+        int playerY = (int)(player.getY()/moveY);
         if(!moving){
             if (Greenfoot.isKeyDown("right")){
                 try{
-                    if(theMovementGrid[player.getX()+1][player.getY()] == 1)
+                    if(theMovementGrid[playerX+1][playerY] == 1)
                     {
                         moving = true;
-                        player.setLocation(player.getX()+1, player.getY());
+                        player.setRotation(0);
+                        player.move(moveX);
                         moving = false;
                     }
                 } catch (ArrayIndexOutOfBoundsException e)
@@ -131,10 +143,11 @@ public class Town extends World
                 }
             } else if (Greenfoot.isKeyDown("left")){
                 try{
-                    if(theMovementGrid[player.getX()-1][player.getY()] == 1)
+                    if(theMovementGrid[playerX-1][playerY] == 1)
                     {
                         moving = true;
-                        player.setLocation(player.getX()-1, player.getY());
+                        player.setRotation(180);
+                        player.move(moveX);
                         moving = false;
                     }
                 } catch (ArrayIndexOutOfBoundsException e)
@@ -143,10 +156,11 @@ public class Town extends World
                 }
             } else if (Greenfoot.isKeyDown("up")){
                 try{
-                    if(theMovementGrid[player.getX()][player.getY()-1] == 1)
+                    if(theMovementGrid[playerX][playerY-1] == 1)
                     {
                         moving = true;
-                        player.setLocation(player.getX(), player.getY()-1);
+                        player.setRotation(270);
+                        player.move(moveY);
                         moving = false;
                     }
                 } catch (ArrayIndexOutOfBoundsException e)
@@ -155,10 +169,11 @@ public class Town extends World
                 }
             } else if (Greenfoot.isKeyDown("down")) {
                 try{
-                    if(theMovementGrid[player.getX()][player.getY()+1] == 1)
+                    if(theMovementGrid[playerX][playerY+1] == 1)
                     {
                         moving = true;
-                        player.setLocation(player.getX(), player.getY()+1);
+                        player.setRotation(90);
+                        player.move(moveY);
                         moving = false;
                     }
                 } catch (ArrayIndexOutOfBoundsException e)
