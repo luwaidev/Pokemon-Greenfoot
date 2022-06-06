@@ -23,22 +23,22 @@ public class Trainer extends Battle
     
     public void act()
     {           
-        move(-1);
+        move(-3);
         i++;
-        if(i-50 == 0){
+        if(i-10 == 0){
             image = new GreenfootImage("images/BattleTrainerImages/boy1.png");
             setImage(image);
         }
-        if(i-70 == 0){
+        if(i-20 == 0){
             image = new GreenfootImage("images/BattleTrainerImages/boy2.png");
             setImage(image);
             getWorld().addObject(new PokeBall(), 100, 350);
         }
-        if(i-90 == 0){
+        if(i-30 == 0){
             image = new GreenfootImage("images/BattleTrainerImages/boy3.png");
             setImage(image);
         }
-        if(i-110 == 0){
+        if(i-40 == 0){
             image = new GreenfootImage("images/BattleTrainerImages/boy4.png");
             setImage(image);
         }

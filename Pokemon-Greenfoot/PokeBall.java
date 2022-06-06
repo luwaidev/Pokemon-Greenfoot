@@ -25,20 +25,20 @@ public class PokeBall extends Battle
         a++;
         if(getX() < 200){
             if(a % 2 == 0){
-                setLocation(getX() + 1, getY() + 1);
+                setLocation(getX() + 4, getY() + 4);
             }
-            turn(6);
+            turn(15);
         }
         if(getX() >= 200){
             setRotation(0);
         }
-        if(a == 200){
+        if(a == 55){
             setImage("images/BattleImages/halfOpenPokeBall.png");
         }
-        if(a == 245){
+        if(a == 60){
             setImage("images/BattleImages/openedPokeBall.png");
         }
-        if(a == 270){
+        if(a == 68){
             getWorld().addObject(new PokeBallExplosion(), this.getX(), this.getY());
             getWorld().removeObject(this);
         }

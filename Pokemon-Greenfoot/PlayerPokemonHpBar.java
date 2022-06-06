@@ -20,7 +20,15 @@ public class PlayerPokemonHpBar extends Battle
     public void act()
     {
         if(getY() > 370){
-            setLocation(getX(), getY() - 1);
+            setLocation(getX(), getY() - 3);
         }
+        if(getY() <= 370){
+            getWorld().addObject(new TextBar(), 300, 460);
+        }
+        /*
+         * if(getY() == 370){
+         *      addLabels -> for name, level, health
+           }
+         */
     }
 }

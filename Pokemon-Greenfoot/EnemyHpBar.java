@@ -20,7 +20,7 @@ public class EnemyHpBar extends Battle
     public void act()
     {
         if(getY() < 125){
-            setLocation(getX(), getY() + 1);
+            setLocation(getX(), getY() + 3);
         }
     }
 }

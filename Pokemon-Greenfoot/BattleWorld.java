@@ -23,6 +23,7 @@ public class BattleWorld extends World
          //coords for adding pokeBall
         
         addObject(new Trainer(), 300, 350);
+        
         /*
          * startObjects()
          * addMenu()
