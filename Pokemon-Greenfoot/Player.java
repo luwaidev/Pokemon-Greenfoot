@@ -1,63 +1,46 @@
-import greenfoot.*;
+import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+
 /**
- * This Player demonstrates how to use the SuperSmoothMover class. See notes in 
- * SuperSmoothMover for details.
+ * Write a description of class Player here.
  * 
- * @author Jordan Cohen 
- * @version 1.10 (December 2021)
+ * @author (your name) 
+ * @version (a version number or a date)
  */
-public class Player extends SuperSmoothMover
+public class Player extends Actor
 {
-    // Player size
-    private final int WIDTH = 48; 
-    private final int HEIGHT = 48;
-
-    // Physics variables
-    private double thrust = .08; 
-    private double decay = 0.992;
-    private double maxSpeed = 4.0;
-    private double minSpeed = 0.1;
-    private double turningSpeed = 10.0;
-    private double speed;
-    private double xSpeed, ySpeed;
-
-    private int xLocation;
-    private int yLocation;
     
-    // Drawing variables
-    private GreenfootImage normalImage, accelImage;
-    private int armorRings;
-    private boolean thrusting;
-
-    private SuperStatBar stats;
-    private SuperSpeechBubble bubble;
-    
-    public Player () {
-        
-    }
-
-    public void addedToWorld (World w){
-        
-    }
-
+    static int speed = 2; 
+    static int originalX, originalY; 
+    static int worldX, worldY; 
     /**
      * Act - do whatever the Player wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     public void act()
-    {    
-        
-    }
-
-    
-    
-    private void setXLocation(int xx)
     {
-        xLocation = xx;
+        // Add your action code here.
+        //move();
     }
     
-    private void setYLocation(int yy)
-    {
-        yLocation = yy;
+    /*
+    public void move(){
+        if(Greenfoot.isKeyDown("left")){
+            setRotation(180);
+            move(speed); 
+        }
+        if(Greenfoot.isKeyDown("right")){
+            setRotation(0);
+            move(speed); 
+        }
+        if(Greenfoot.isKeyDown("up")){
+            setRotation(270);
+            move(speed);
+        }
+        if(Greenfoot.isKeyDown("down")){
+            setRotation(90);
+            move(speed);
+        }
     }
+    */
+    
 }

@@ -46,7 +46,16 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Town extends World
 {
-
+    private int gridPosX = 65;
+    private int gridPosY = 65;
+    
+    
+    static int originalX = 650, originalY = 650;
+    public static final int HIGH = 400, WIDE = 500; //400, 500 //880 1483 - original image size 
+    
+    Scroller scroller;
+    Player scrollActor;
+    
     private SuperTextBox testBox;
 
     private MouseInfo m;
@@ -56,17 +65,18 @@ public class Town extends World
     private Font funFont, boringFont;
     private int counter, maxCount, countdown;
 
-    private Timer timer;
     private float[] results;
 
     private long start, current, elapsed;
     private int total;
     private long seconds;
 
+    private int timer = 0;
+    
     private boolean boy;
     private boolean moving;
 
-    private double worldFactor = 0.3;
+    private double worldFactor = 0.1;
     private int gridX;
     private int gridY;
     
@@ -80,13 +90,15 @@ public class Town extends World
     public Town(boolean boy)
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
-        super(800, 600, 1); 
+        // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
+        super(WIDE, HIGH, 1, false); 
+        addPlayer(); 
 
         this.boy = boy;
         
         //makes grid with dimensions factored into the world
-        gridX = (int)(800.00*worldFactor);
-        gridY = (int)(600.00*worldFactor);
+        gridX = (int)(1400.00*worldFactor);
+        gridY = (int)(1000.00*worldFactor);
         
         //this is the movement grid that we are going to use 
         //loop through and make everything a 1 for now
@@ -100,10 +112,107 @@ public class Town extends World
                 theMovementGrid[i][j] = 1;
             }
         }
-        player = new Player();
-        addObject(player, getWidth()/2,getHeight()/2);
+        
+        for(int i = 0; i<gridX; i++)
+        {
+            for(int j = 0; j < 7; j++)
+            {
+                theMovementGrid[i][j] = 0;
+            }
+        }
+        //random blurb thinking through logic
+        //scroller uses an image and goes through that as the player moves
+        //should probably make a grid over the image and use logic to convert player location into spots on the grid
+        //how????
+        //player area is someting like 550 x 400
+        //image is like 1480 x 700
+        //grid using factors and numbers from image
+        //need to see code to make it work
+        fillBigTree(3,59);
+        fillBigTree(3,78);
+        fillBigTree(24,59);
+        fillBigTree(24,78);
+        fillRowBigTree(43,50);
+        fillRowBigTree(43,63);
+        fillRowBigTree(43,76);
+        fillRowBigTree(54,76);
+        fillRowBigTree(65,76);
+        fillRowBigTree(76,76);
+        fillRowBigTree(87,76);
+        fillRowBigTree(98,76);
+        fillRowBigTree(109,76);
+        fillRowBigTree(120,76);
+        fillSmallTree(131,75);
+        fillSmallTree(131,58);
+        fillSmallTree(131,45);
+        fillSmallTree(131,32);
+        fillSmallTree(131,19);
+        fillSmallTree(112,32);
+        fillSmallTree(112,45);
+        for(int i = 38; i<90; i++)
+        {
+            for(int j = 20; j < 41; j++)
+            {
+                theMovementGrid[i][j] = 0;
+            }
+        }
+        for(int i = 54; i<76; i++)
+        {
+            for(int j = 50; j < 63; j++)
+            {
+                theMovementGrid[i][j] = 0;
+            }
+        }
+        for(int i = 86; i<107; i++)
+        {
+            for(int j = 43; j < 63; j++)
+            {
+                theMovementGrid[i][j] = 0;
+            }
+        }
     }
 
+    /**
+     * Fills tree with 0s, x y coordinate has to be upper left corner of the box 
+     * surrounding a tree
+     */
+    public void fillBigTree(int x, int y)
+    {
+        for(int i = x; i<(x+12); i++)
+        {
+            for(int j = y; j < (y+13); j++)
+            {
+                theMovementGrid[i][j] = 0;
+            }
+        }
+    }
+    
+    /**
+     * Fills tree with 0s, x y coordinate has to be upper left corner of the box 
+     * surrounding a tree
+     */
+    public void fillRowBigTree(int x, int y)
+    {
+        for(int i = x; i<(x+11); i++)
+        {
+            for(int j = y; j < (y+13); j++)
+            {
+                theMovementGrid[i][j] = 0;
+            }
+        }
+    }
+    
+    public void fillSmallTree(int x, int y)
+    {
+        for(int i = x; i<(x+9); i++)
+        {
+            for(int j = y; j < (y+13); j++)
+            {
+                theMovementGrid[i][j] = 0;
+            }
+        }
+    }
+    
     /**
      * Sharing mouseInfo is important.
      * 
@@ -121,21 +230,43 @@ public class Town extends World
         }
         return m;
     }
+    
+    public void addPlayer(){
+        GreenfootImage background = new GreenfootImage("map.png");
+        scroller = new Scroller(this, background, 1390, 1000);
+        scrollActor = new Player();
+        addObject(scrollActor, originalX, originalY);
+        Player.originalX = originalX;
+        Player.originalY = originalY;
+        Player.worldX = originalX;
+        Player.worldY = originalY;
+        Player.speed = 2;
+        scroll();
+    }
+    
+    public void scroll()
+    {
+        if(scrollActor != null)
+        {
+            int dsX = scrollActor.getX() - WIDE / 2;
+            int dsY = scrollActor.getY() - HIGH / 2;
+            scroller.scroll(dsX, dsY);
+        }
+    }
 
     private void checkKeys(){
-        double moveX = (800.00/gridX);
-        double moveY = (600.00/gridY);
-        int playerX = (int)(player.getX()/moveX);
-        int playerY = (int)(player.getY()/moveY);
+        double moveX = (1400.00/gridX);
+        double moveY = (1000.00/gridY);
         if(!moving){
             if (Greenfoot.isKeyDown("right")){
                 try{
-                    if(theMovementGrid[playerX+1][playerY] == 1)
+                    if(theMovementGrid[gridPosX+1][gridPosY] == 1)
                     {
                         moving = true;
-                        player.setRotation(0);
-                        player.move(moveX);
+                        scrollActor.setRotation(0);
+                        scrollActor.move((int)moveX);
                         moving = false;
+                        gridPosX++;
                     }
                 } catch (ArrayIndexOutOfBoundsException e)
                 {
@@ -143,12 +274,13 @@ public class Town extends World
                 }
             } else if (Greenfoot.isKeyDown("left")){
                 try{
-                    if(theMovementGrid[playerX-1][playerY] == 1)
+                    if(theMovementGrid[gridPosX-1][gridPosY] == 1)
                     {
                         moving = true;
-                        player.setRotation(180);
-                        player.move(moveX);
+                        scrollActor.setRotation(180);
+                        scrollActor.move((int)moveX);
                         moving = false;
+                        gridPosX--;
                     }
                 } catch (ArrayIndexOutOfBoundsException e)
                 {
@@ -156,12 +288,13 @@ public class Town extends World
                 }
             } else if (Greenfoot.isKeyDown("up")){
                 try{
-                    if(theMovementGrid[playerX][playerY-1] == 1)
+                    if(theMovementGrid[gridPosX][gridPosY-1] == 1)
                     {
                         moving = true;
-                        player.setRotation(270);
-                        player.move(moveY);
+                        scrollActor.setRotation(270);
+                        scrollActor.move((int)moveY);
                         moving = false;
+                        gridPosY--;
                     }
                 } catch (ArrayIndexOutOfBoundsException e)
                 {
@@ -169,12 +302,13 @@ public class Town extends World
                 }
             } else if (Greenfoot.isKeyDown("down")) {
                 try{
-                    if(theMovementGrid[playerX][playerY+1] == 1)
+                    if(theMovementGrid[gridPosX][gridPosY+1] == 1)
                     {
                         moving = true;
-                        player.setRotation(90);
-                        player.move(moveY);
+                        scrollActor.setRotation(90);
+                        scrollActor.move((int)moveY);
                         moving = false;
+                        gridPosY++;
                     }
                 } catch (ArrayIndexOutOfBoundsException e)
                 {
@@ -186,6 +320,15 @@ public class Town extends World
 
     public void act () {
         m = Greenfoot.getMouseInfo();
-        checkKeys();
+        if(timer >= 3)
+        {
+            checkKeys();
+            timer = 0;
+        }
+        else
+        {
+            timer++;
+        }
+        scroll();
     }
 }
