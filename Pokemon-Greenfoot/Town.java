@@ -1,5 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-
+import java.util.Random;
 /**
  * The World that demonstrates my Library of Resources.
  * 
@@ -49,6 +49,7 @@ public class Town extends World
     private int gridPosX = 65;
     private int gridPosY = 65;
     
+    Random random = new Random();
     
     static int originalX = 650, originalY = 650;
     public static final int HIGH = 400, WIDE = 500; //400, 500 //880 1483 - original image size 
@@ -170,6 +171,69 @@ public class Town extends World
                 theMovementGrid[i][j] = 0;
             }
         }
+        for(int i = 25; i<37; i++)
+        {
+            for(int j = 72; j < 78; j++)
+            {
+                theMovementGrid[i][j] = 2;
+            }
+        }
+        for(int i = 93; i<120; i++)
+        {
+            for(int j = 19; j < 31; j++)
+            {
+                theMovementGrid[i][j] = 2;
+            }
+        }
+        for(int i = 2; i<32; i++)
+        {
+            for(int j = 7; j < 22; j++)
+            {
+                theMovementGrid[i][j] = 2;
+            }
+        }
+        for(int i = 15; i<24; i++)
+        {
+            for(int j = 59; j < 71; j++)
+            {
+                theMovementGrid[i][j] = 2;
+            }
+        }
+        for(int i = 15; i<24; i++)
+        {
+            for(int j = 78; j < 90; j++)
+            {
+                theMovementGrid[i][j] = 2;
+            }
+        }
+        for(int i = 2; i<14; i++)
+        {
+            for(int j = 72; j < 78; j++)
+            {
+                theMovementGrid[i][j] = 2;
+            }
+        }
+        for(int i = 63; i<68; i++)
+        {
+            for(int j = 58; j < 63; j++)
+            {
+                theMovementGrid[i][j] = 3;
+            }
+        }
+        for(int i = 94; i<99; i++)
+        {
+            for(int j = 57; j < 63; j++)
+            {
+                theMovementGrid[i][j] = 3;
+            }
+        }
+        for(int i = 123; i<127; i++)
+        {
+            for(int j = 2; j < 7; j++)
+            {
+                theMovementGrid[i][j] = 3;
+            }
+        }
     }
 
     /**
@@ -260,13 +324,29 @@ public class Town extends World
         if(!moving){
             if (Greenfoot.isKeyDown("right")){
                 try{
-                    if(theMovementGrid[gridPosX+1][gridPosY] == 1)
+                    if(theMovementGrid[gridPosX+1][gridPosY] == 1 || theMovementGrid[gridPosX+1][gridPosY] == 2)
                     {
+                        if(theMovementGrid[gridPosX+1][gridPosY] == 3)
+                        {
+                            boolean newPlace = random.nextBoolean();
+                            if(newPlace)
+                            {
+                                //put in code to go into new world
+                            }
+                        }
                         moving = true;
                         scrollActor.setRotation(0);
                         scrollActor.move((int)moveX);
                         moving = false;
                         gridPosX++;
+                        if(theMovementGrid[gridPosX+1][gridPosY] == 2)
+                        {
+                            boolean fight = random.nextBoolean();
+                            if(fight)
+                            {
+                                //put in code to go into battle mode
+                            }
+                        }
                     }
                 } catch (ArrayIndexOutOfBoundsException e)
                 {
@@ -274,13 +354,29 @@ public class Town extends World
                 }
             } else if (Greenfoot.isKeyDown("left")){
                 try{
-                    if(theMovementGrid[gridPosX-1][gridPosY] == 1)
+                    if(theMovementGrid[gridPosX-1][gridPosY] == 1 || theMovementGrid[gridPosX-1][gridPosY] == 2)
                     {
+                        if(theMovementGrid[gridPosX-1][gridPosY] == 3)
+                        {
+                            boolean newPlace = random.nextBoolean();
+                            if(newPlace)
+                            {
+                                //put in code to go into new world
+                            }
+                        }
                         moving = true;
                         scrollActor.setRotation(180);
                         scrollActor.move((int)moveX);
                         moving = false;
                         gridPosX--;
+                        if(theMovementGrid[gridPosX-1][gridPosY] == 2)
+                        {
+                            boolean fight = random.nextBoolean();
+                            if(fight)
+                            {
+                                //put in code to go into battle mode
+                            }
+                        }
                     }
                 } catch (ArrayIndexOutOfBoundsException e)
                 {
@@ -288,13 +384,29 @@ public class Town extends World
                 }
             } else if (Greenfoot.isKeyDown("up")){
                 try{
-                    if(theMovementGrid[gridPosX][gridPosY-1] == 1)
+                    if(theMovementGrid[gridPosX][gridPosY-1] == 1 || theMovementGrid[gridPosX][gridPosY-1] == 2)
                     {
+                        if(theMovementGrid[gridPosX][gridPosY-1] == 3)
+                        {
+                            boolean newPlace = random.nextBoolean();
+                            if(newPlace)
+                            {
+                                //put in code to go into new world
+                            }
+                        }
                         moving = true;
                         scrollActor.setRotation(270);
                         scrollActor.move((int)moveY);
                         moving = false;
                         gridPosY--;
+                        if(theMovementGrid[gridPosX][gridPosY-1] == 2)
+                        {
+                            boolean fight = random.nextBoolean();
+                            if(fight)
+                            {
+                                //put in code to go into battle mode
+                            }
+                        }
                     }
                 } catch (ArrayIndexOutOfBoundsException e)
                 {
@@ -302,13 +414,29 @@ public class Town extends World
                 }
             } else if (Greenfoot.isKeyDown("down")) {
                 try{
-                    if(theMovementGrid[gridPosX][gridPosY+1] == 1)
+                    if(theMovementGrid[gridPosX][gridPosY+1] == 1 || theMovementGrid[gridPosX][gridPosY+1] == 2)
                     {
+                        if(theMovementGrid[gridPosX][gridPosY+1] == 3)
+                        {
+                            boolean newPlace = random.nextBoolean();
+                            if(newPlace)
+                            {
+                                //put in code to go into new world
+                            }
+                        }
                         moving = true;
                         scrollActor.setRotation(90);
                         scrollActor.move((int)moveY);
                         moving = false;
                         gridPosY++;
+                        if(theMovementGrid[gridPosX][gridPosY+1] == 2)
+                        {
+                            boolean fight = random.nextBoolean();
+                            if(fight)
+                            {
+                                //put in code to go into battle mode
+                            }
+                        }
                     }
                 } catch (ArrayIndexOutOfBoundsException e)
                 {
