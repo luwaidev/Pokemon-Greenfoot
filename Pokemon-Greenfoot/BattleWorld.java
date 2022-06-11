@@ -8,7 +8,8 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class BattleWorld extends World
 {
-
+    public boolean playerTurn;
+    private int time;
     /**
      * Constructor for objects of class BattleWorld.
      * 
@@ -35,6 +36,10 @@ public class BattleWorld extends World
     }
     
     public void act(){
+        
+    }
+    
+    public void StartBattle(){
         
     }
 }

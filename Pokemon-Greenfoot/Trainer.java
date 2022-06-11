@@ -23,7 +23,7 @@ public class Trainer extends Battle
     
     public void act()
     {           
-        move(-3);
+        move(-4);
         i++;
         if(i-10 == 0){
             image = new GreenfootImage("images/BattleTrainerImages/boy1.png");

@@ -29,7 +29,7 @@ public class PokeBallExplosion extends Battle
             setImage(image);
             if(a/5 == 6){
                 getWorld().addObject(new PlayerPokemonHpBar(), 468, 480);
-                getWorld().addObject(new EnemyHpBar(), 100, 37);
+                getWorld().addObject(new EnemyPokemonHpBar(), 100, 37);
                 getWorld().removeObject(this);
             }
         }
