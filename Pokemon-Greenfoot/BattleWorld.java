@@ -9,7 +9,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 public class BattleWorld extends World
 {
     public boolean playerTurn;
-    private int time;
+    private int time;    
     /**
      * Constructor for objects of class BattleWorld.
      * 
@@ -21,9 +21,11 @@ public class BattleWorld extends World
         setBackground("images/BattleImages/routeBackground.jpeg");
         
         
-         //coords for adding pokeBall
         
-        addObject(new Trainer(), 300, 350);
+        addObject(new TextBar(), 300, 450);
+        addObject(new PlayerPlatform(), 200, 370);
+        addObject(new EnemyPlatform(), 450, 200);
+        addObject(new Trainer(), 300, 252);
         
         /*
          * startObjects()

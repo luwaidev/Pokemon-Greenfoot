@@ -13,6 +13,7 @@ public class Trainer extends Battle
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     int i = 0;
+    boolean startAnimations = false;
     GreenfootImage image; 
     //boolean for gender
     public Trainer(){//pass parameter for gender?
@@ -22,25 +23,31 @@ public class Trainer extends Battle
     
     
     public void act()
-    {           
-        move(-4);
-        i++;
-        if(i-10 == 0){
-            image = new GreenfootImage("images/BattleTrainerImages/boy1.png");
-            setImage(image);
+    {  
+        if(Greenfoot.isKeyDown("Enter")){
+            startAnimations = true;
         }
-        if(i-20 == 0){
-            image = new GreenfootImage("images/BattleTrainerImages/boy2.png");
-            setImage(image);
-            getWorld().addObject(new PokeBall(), 100, 350);
+        if(startAnimations){
+            move(-4);
+            i++;
+            if(i-10 == 0){
+                image = new GreenfootImage("images/BattleTrainerImages/boy1.png");
+                setImage(image);
+            }
+            if(i-20 == 0){
+                image = new GreenfootImage("images/BattleTrainerImages/boy2.png");
+                setImage(image);
+                getWorld().addObject(new PokeBall(), 100, 252);
+            }
+            if(i-30 == 0){
+                image = new GreenfootImage("images/BattleTrainerImages/boy3.png");
+                setImage(image);
+            }
+            if(i-40 == 0){
+                image = new GreenfootImage("images/BattleTrainerImages/boy4.png");
+                setImage(image);
+            }
         }
-        if(i-30 == 0){
-            image = new GreenfootImage("images/BattleTrainerImages/boy3.png");
-            setImage(image);
-        }
-        if(i-40 == 0){
-            image = new GreenfootImage("images/BattleTrainerImages/boy4.png");
-            setImage(image);
-        }
+        
     }
 }

@@ -35,10 +35,9 @@ public class EnemyPokemonHpBar extends Battle
                 addedHpBar = true;
                 
             }
-            curHealth--;
+            //curHealth--;
             hpBar.update(curHealth);
         }
-        
     }
     
     /*public void updateHealth(int health){

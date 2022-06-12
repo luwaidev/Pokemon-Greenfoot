@@ -13,7 +13,7 @@ public class PlayerPokemonHpBar extends Battle
      * the 'Act' or 'Run' button gets pressed in the environment.
      */
     GreenfootImage image = new GreenfootImage("images/BattleImages/HPPlayer.png");
-    boolean addedTextBar = false;
+    boolean addedHpBar = false;
     private int maxHealth = 300; 
     private int curHealth = 300;
     SuperStatBar hpBar;
@@ -23,19 +23,23 @@ public class PlayerPokemonHpBar extends Battle
     
     public void act()
     {
-        if(getY() > 370){
+        if(getY() > 300){
             setLocation(getX(), getY() - 3);
         }
-        if(getY() <= 370){
-            
-            if(!addedTextBar){
+        if(getY() <= 300){
+            if(Greenfoot.isKeyDown("Enter")){
+                getWorld().addObject(new BattleButton("Fight", true), 110, 430);
+                getWorld().addObject(new BattleButton("Bag", false), 340, 430);
+                getWorld().addObject(new BattleButton("Pokemon", false), 110, 475);
+                getWorld().addObject(new BattleButton("Run", false), 340, 475);
+            }
+            if(!addedHpBar){
                 hpBar = new SuperStatBar(maxHealth, curHealth, this, 100, 8, 0, Color.GREEN, Color.BLACK, false, Color.BLACK, 1);
                 getWorld().addObject(hpBar, 0, 0);
-                //getWorld().addObject(new TextBar(), 300, 465);
-                addedTextBar = true;
+                addedHpBar = true;
                 
             }
-            curHealth--;
+            //curHealth--;
             hpBar.update(curHealth);
         }
         
