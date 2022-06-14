@@ -17,4 +17,7 @@ public class EnemyPokemon extends Battle
     {
         // Add your action code here.
     }
+    public void scaleImg(){
+        
+    }
 }

@@ -28,10 +28,7 @@ public class PlayerPokemonHpBar extends Battle
         }
         if(getY() <= 300){
             if(Greenfoot.isKeyDown("Enter")){
-                getWorld().addObject(new BattleButton("Fight"), 110, 430);
-                getWorld().addObject(new BattleButton("Bag"), 340, 430);
-                getWorld().addObject(new BattleButton("Pokemon"), 110, 475);
-                getWorld().addObject(new BattleButton("Run"), 340, 475);
+                ((BattleWorld) getWorld()).mainMenu();
             }
             if(!addedHpBar){
                 hpBar = new SuperStatBar(maxHealth, curHealth, this, 100, 8, 0, Color.GREEN, Color.BLACK, false, Color.BLACK, 1);

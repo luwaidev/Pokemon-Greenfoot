@@ -8,8 +8,18 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class Pokemon  
 {
-    // instance variables - replace the example below with your own
-    public GreenfootImage img;
+    // Honestly not really sure how to keep stats of different pokemon, Unity has this thing called scriptable objects, but I can't use that rn
+    // Could create text files to record the stats of different pokemon but I don't wanna set up a system to get that working lmao
+    public GreenfootImage staticImg;
     public String name;
+    
+    public int health;
+    public int maxHealth;
+    
+    
+    // Completely ignoring status moves
+    public String[] moves;
+    public int[] moveDmg;
+    public int[] moveType; // not implemented yet
     
 }
