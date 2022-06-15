@@ -50,7 +50,8 @@ public class SuperTextBox extends Actor
     ArrayList<Rectangle> rectangles;
     //value that this textbox(button) has
     protected int myValue = 0;
-
+    
+    
     /**
      *  Simple Constructor - One line text box
      *  

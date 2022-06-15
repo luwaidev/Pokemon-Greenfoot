@@ -46,25 +46,31 @@ import java.util.Random;
  */
 public class Town extends World
 {
-    private int gridPosX = 65;
-    private int gridPosY = 65;
-    
+    private static int gridPosX;
+    private static int gridPosY;
+
     Random random = new Random();
-    
-    static int originalX = 650, originalY = 650;
+
+    private static int originalX;
+    private static int originalY;
     public static final int HIGH = 400, WIDE = 500; //400, 500 //880 1483 - original image size 
-    
+
     Scroller scroller;
     Player scrollActor;
-    
+
     private SuperTextBox testBox;
 
     private MouseInfo m;
+
+    private int rectCheck = 0;
 
     private Player player;
 
     private Font funFont, boringFont;
     private int counter, maxCount, countdown;
+
+    private Rectangle pauseBox;
+    private GreenfootImage pauseBoxScreen = new GreenfootImage("pauseScreen.png");
 
     private float[] results;
 
@@ -73,14 +79,18 @@ public class Town extends World
     private long seconds;
 
     private int timer = 0;
-    
+
     private boolean boy;
     private boolean moving;
 
     private double worldFactor = 0.1;
     private int gridX;
     private int gridY;
-    
+
+    private boolean paused = false;
+
+    private int pokemonHealth;
+
     private GreenfootImage gridLines;
 
     private int[][] theMovementGrid;
@@ -88,19 +98,22 @@ public class Town extends World
      * Constructor for objects of class MyWorld.
      * 
      */
-    public Town(boolean boy)
+    public Town(int x, int y, int health)
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
-        // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(WIDE, HIGH, 1, false); 
-        addPlayer(); 
-
-        this.boy = boy;
         
+
+        pokemonHealth = health;
+        gridPosX = x;
+        gridPosY = y;
+        originalX = gridPosX * 10;
+        originalY = gridPosY*10;
         //makes grid with dimensions factored into the world
         gridX = (int)(1400.00*worldFactor);
         gridY = (int)(1000.00*worldFactor);
-        
+
+        pauseBoxScreen.scale(500,400);
         //this is the movement grid that we are going to use 
         //loop through and make everything a 1 for now
         //where there are objects that cannot be passed, make the value 0
@@ -113,7 +126,7 @@ public class Town extends World
                 theMovementGrid[i][j] = 1;
             }
         }
-        
+
         for(int i = 0; i<gridX; i++)
         {
             for(int j = 0; j < 7; j++)
@@ -234,6 +247,7 @@ public class Town extends World
                 theMovementGrid[i][j] = 3;
             }
         }
+        addPlayer(); 
     }
 
     /**
@@ -250,7 +264,7 @@ public class Town extends World
             }
         }
     }
-    
+
     /**
      * Fills tree with 0s, x y coordinate has to be upper left corner of the box 
      * surrounding a tree
@@ -265,7 +279,7 @@ public class Town extends World
             }
         }
     }
-    
+
     public void fillSmallTree(int x, int y)
     {
         for(int i = x; i<(x+9); i++)
@@ -276,7 +290,7 @@ public class Town extends World
             }
         }
     }
-    
+
     /**
      * Sharing mouseInfo is important.
      * 
@@ -294,20 +308,20 @@ public class Town extends World
         }
         return m;
     }
-    
+
     public void addPlayer(){
         GreenfootImage background = new GreenfootImage("map.png");
         scroller = new Scroller(this, background, 1390, 1000);
         scrollActor = new Player();
         addObject(scrollActor, originalX, originalY);
-        Player.originalX = originalX;
-        Player.originalY = originalY;
+        Player.originalX = this.originalX;
+        Player.originalY = this.originalY;
         Player.worldX = originalX;
         Player.worldY = originalY;
         Player.speed = 2;
         scroll();
     }
-    
+
     public void scroll()
     {
         if(scrollActor != null)
@@ -446,17 +460,78 @@ public class Town extends World
         }
     }
 
+    public void pauseScreen()
+    {
+        if (rectCheck==0){
+            pauseBox = new Rectangle(this.getWidth(),this.getHeight(),255);
+            pauseBox.setImage(pauseBoxScreen);
+            addObject(pauseBox, getWidth()/2, getHeight()/2);
+            rectCheck = 1;
+        }
+    }
+
+    public void checkPause()
+    {
+        if(Greenfoot.isKeyDown("1"))
+        {
+            Storer.setSave(1,0,gridPosX);
+            Storer.setSave(1,1,gridPosY);
+            Storer.setSave(1,2,pokemonHealth);
+        } else if(Greenfoot.isKeyDown("2"))
+        {
+            Storer.setSave(2,0,gridPosX);
+            Storer.setSave(2,1,gridPosY);
+            Storer.setSave(2,2,pokemonHealth);
+        } else if(Greenfoot.isKeyDown("3"))
+        {
+            Storer.setSave(3,0,gridPosX);
+            Storer.setSave(3,1,gridPosY);
+            Storer.setSave(3,2,pokemonHealth);
+        } else if(Greenfoot.isKeyDown("4"))
+        {
+            Storer.setSave(4,0,gridPosX);
+            Storer.setSave(4,1,gridPosY);
+            Storer.setSave(4,2,pokemonHealth);
+        } else if(Greenfoot.isKeyDown("shift"))
+        {
+            removeObject(pauseBox);
+            rectCheck = 0;
+            paused = false;
+        } else if(Greenfoot.isKeyDown("m"))
+        {
+            removeObject(pauseBox);
+            rectCheck = 0;
+            TitleScreen title = new TitleScreen();
+            Greenfoot.setWorld(title);
+        }
+    }
+
     public void act () {
         m = Greenfoot.getMouseInfo();
-        if(timer >= 3)
+        if (Greenfoot.isKeyDown("u"))
         {
-            checkKeys();
-            timer = 0;
+            System.out.println("grid x: " + gridPosX + " grid y: " + gridPosY);
         }
-        else
+        if(!paused)
         {
-            timer++;
+            if(Greenfoot.isKeyDown("space"))
+            {
+                paused = true;
+            }
+            if(timer >= 3)
+            {
+                checkKeys();
+                timer = 0;
+            }
+            else
+            {
+                timer++;
+            }
+            scroll();
+        } else
+        {
+            pauseScreen();
+            checkPause();
         }
-        scroll();
     }
 }
