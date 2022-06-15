@@ -342,11 +342,7 @@ public class Town extends World
                     {
                         if(theMovementGrid[gridPosX+1][gridPosY] == 3)
                         {
-                            boolean newPlace = random.nextBoolean();
-                            if(newPlace)
-                            {
-                                //put in code to go into new world
-                            }
+                            //put in code to go into new world
                         }
                         moving = true;
                         scrollActor.setRotation(0);
@@ -372,11 +368,7 @@ public class Town extends World
                     {
                         if(theMovementGrid[gridPosX-1][gridPosY] == 3)
                         {
-                            boolean newPlace = random.nextBoolean();
-                            if(newPlace)
-                            {
-                                //put in code to go into new world
-                            }
+                            //put in code to go into new world
                         }
                         moving = true;
                         scrollActor.setRotation(180);
@@ -402,11 +394,7 @@ public class Town extends World
                     {
                         if(theMovementGrid[gridPosX][gridPosY-1] == 3)
                         {
-                            boolean newPlace = random.nextBoolean();
-                            if(newPlace)
-                            {
-                                //put in code to go into new world
-                            }
+                            //put in code to go into new world
                         }
                         moving = true;
                         scrollActor.setRotation(270);
@@ -432,11 +420,7 @@ public class Town extends World
                     {
                         if(theMovementGrid[gridPosX][gridPosY+1] == 3)
                         {
-                            boolean newPlace = random.nextBoolean();
-                            if(newPlace)
-                            {
-                                //put in code to go into new world
-                            }
+                            //put in code to go into new world
                         }
                         moving = true;
                         scrollActor.setRotation(90);
