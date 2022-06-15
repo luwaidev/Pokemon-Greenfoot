@@ -13,20 +13,28 @@ public class TitleScreen extends World
     //the font that is used for everything
     Font boringFont = new Font ("Times New Roman", false, false, 14);
 
+    Storer storer = new Storer();
+    
     //these variables keep track of the mouse's position on the screen
     private int mx = 0;
     private int my = 0;
 
     private boolean boy;
 
-    SuperTextBox boyButton;
-    SuperTextBox girlButton;
+    SuperTextBox saveButtonOne;
+    SuperTextBox saveButtonTwo;
+    SuperTextBox saveButtonThree;
+    SuperTextBox saveButtonFour;
+    
+    private int locationX;
+    private int locationY;
+    private int pokemonHealth;
 
     //these arraylists keep track of all the differen types of option buttons for each type of componenet
-    ArrayList<SuperTextBox> gender;
+    ArrayList<SuperTextBox> saveFiles;
 
     //these rectangles are the shaded boxes that show up on selected options on the screen
-    Rectangle genderSelected;
+    Rectangle saveSelected;
 
     //this is the background for the titlescreen
     GreenfootImage background = new GreenfootImage("titleBackground.jpg");
@@ -127,22 +135,32 @@ public class TitleScreen extends World
         //adding boxes that you can click for customizing
         //cherry buttons
         //sets buttons' values corresponding to the values set in the variables created during initialization
-        boyButton = new SuperTextBox("Boy",Color.WHITE, Color.BLACK, boringFont,true,this.getWidth()/30,1,Color.BLACK); 
-        addObject(boyButton, getWidth()/3, getHeight()*5/6);
-        girlButton = new SuperTextBox("Girl",Color.WHITE, Color.BLACK, boringFont,true,this.getWidth()/30,1,Color.BLACK); 
-        addObject(girlButton,getWidth()*2/3, getHeight()*5/6);
+        saveButtonOne = new SuperTextBox("Save One",Color.WHITE, Color.BLACK, boringFont,true,this.getWidth()/10,1,Color.BLACK); 
+        saveButtonOne.setValue(1);
+        addObject(saveButtonOne, getWidth()/5, getHeight()*5/6);
+        saveButtonTwo = new SuperTextBox("Save Two",Color.WHITE, Color.BLACK, boringFont,true,this.getWidth()/10,1,Color.BLACK); 
+        saveButtonTwo.setValue(2);
+        addObject(saveButtonTwo,getWidth()*2/5, getHeight()*5/6);
+        saveButtonThree = new SuperTextBox("Save Three",Color.WHITE, Color.BLACK, boringFont,true,this.getWidth()/10,1,Color.BLACK);
+        saveButtonThree.setValue(3);
+        addObject(saveButtonThree, getWidth()*3/5, getHeight()*5/6);
+        saveButtonFour = new SuperTextBox("Save Four",Color.WHITE, Color.BLACK, boringFont,true,this.getWidth()/10,1,Color.BLACK); 
+        saveButtonFour.setValue(4);
+        addObject(saveButtonFour,getWidth()*4/5, getHeight()*5/6);
 
         //first option default to selected
-        boyButton.setIsSelected(true);
+        saveButtonOne.setIsSelected(true);
 
         //add each button to the corresponding arraylist
-        gender = new ArrayList<SuperTextBox>();
-        gender.add(boyButton);
-        gender.add(girlButton);
+        saveFiles = new ArrayList<SuperTextBox>();
+        saveFiles.add(saveButtonOne);
+        saveFiles.add(saveButtonTwo);
+        saveFiles.add(saveButtonThree);
+        saveFiles.add(saveButtonFour);
 
         //creates the grey box that signifies selection on top of the first button
-        genderSelected = new Rectangle(boyButton.getWidth(),boyButton.getHeight(), 128);
-        addObject(genderSelected,boyButton.getX(),boyButton.getY());
+        saveSelected = new Rectangle(saveButtonOne.getWidth(),saveButtonOne.getHeight(), 128);
+        addObject(saveSelected,saveButtonOne.getX(),saveButtonOne.getY());
     }
 
     /**
@@ -157,7 +175,7 @@ public class TitleScreen extends World
         addObject(label2,getWidth()/2,getHeight()*2/4);
         label2.setFillColor(Color.BLACK);
         label2.getImage().setTransparency(0);
-        label3 = new Label("Choose your gender(based off pokemon plz don't cancel me):", 30);
+        label3 = new Label("Choose your save file", 30);
         label3.setFillColor(Color.BLACK);
         label3.getImage().setTransparency(0);
         addObject(label3,getWidth()/2,getHeight()*3/4);
@@ -190,13 +208,13 @@ public class TitleScreen extends World
                 for(SuperTextBox box : textBoxes)
                 {
                     //cycle thrugh every button that the checker rectangle is touching
-                    for(SuperTextBox test : gender)
+                    for(SuperTextBox test : saveFiles)
                     {
                         //for every cherry button in the world check if that is the button being clicked by the user
                         if(test.equals(box))
                         {
                             //if this specific cherry button is being selected, deselect every cherry button in the world
-                            for(SuperTextBox cherryLabels : gender)
+                            for(SuperTextBox cherryLabels : saveFiles)
                             {
                                 cherryLabels.setIsSelected(false);
                             }
@@ -224,13 +242,13 @@ public class TitleScreen extends World
             if(textBox.checkSelected())
             {
                 //if this specific button is indeed selected...
-                for(SuperTextBox yes : gender)
+                for(SuperTextBox yes : saveFiles)
                 {
                     //if this specific button is a cherry button
                     if(yes.equals(textBox))
                     {
                         //move the cherry rectangle that darkens the selection to this specific button
-                        genderSelected.setLocation(yes.getX(),yes.getY());
+                        saveSelected.setLocation(yes.getX(),yes.getY());
                     }
                 }
             }
@@ -245,22 +263,37 @@ public class TitleScreen extends World
         if(Greenfoot.isKeyDown("space"))
         {
             //loop through every different array of the different components' buttons
-            for(SuperTextBox selected : gender)
+            for(SuperTextBox selected : saveFiles)
             {
                 //get the cherry option that is selected and set that button's 
                 //value as the value for cherries that will be used in the main world
                 if(selected.checkSelected())
                 {
-                    if(selected==boyButton)
+                    System.out.println(selected.getValue());
+                    if(Storer.getSave(selected.getValue(),0) == -1)
                     {
-                        boy = true;
+                        locationX = 65;
                     } else
                     {
-                        boy = false;
+                        locationX = Storer.getSave(selected.getValue(),0);
+                    }
+                    if(Storer.getSave(selected.getValue(),1) == -1)
+                    {
+                        locationY = 65;
+                    } else
+                    {
+                        locationY = Storer.getSave(selected.getValue(),1);
+                    }
+                    if(Storer.getSave(selected.getValue(),2) == -1)
+                    {
+                        pokemonHealth = 100;
+                    } else
+                    {
+                        pokemonHealth = Storer.getSave(selected.getValue(),2);
                     }
                 }
             }
-            MyWorld world = new MyWorld(boy);
+            Town world = new Town(locationX,locationY,pokemonHealth);
             Greenfoot.setWorld(world);
         }
     }
