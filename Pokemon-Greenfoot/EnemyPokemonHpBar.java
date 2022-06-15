@@ -14,11 +14,14 @@ public class EnemyPokemonHpBar extends Battle
      */
     GreenfootImage image = new GreenfootImage("images/BattleImages/HPEnemy.png");
     boolean addedHpBar = false;
-    int maxHealth = 300; 
-    int curHealth = 300;
+    int maxHealth; 
+    int curHealth;
     SuperStatBar hpBar;
-    public EnemyPokemonHpBar(){
+    public EnemyPokemonHpBar(int maxHp, int curHp){
         setImage(image);
+        maxHealth = maxHp;
+        curHealth = curHp;
+        hpBar = new SuperStatBar(maxHealth, curHealth, this, 100, 8, 6, Color.GREEN, Color.BLACK, false, Color.BLACK, 1);
     }
     
     public void act()
@@ -29,7 +32,6 @@ public class EnemyPokemonHpBar extends Battle
         }
         if(getY() >= 125){
             if(!addedHpBar){
-                hpBar = new SuperStatBar(maxHealth, curHealth, this, 100, 8, 6, Color.GREEN, Color.BLACK, false, Color.BLACK, 1);
                 getWorld().addObject(hpBar, 0, 0);
                 //getWorld().addObject(new TextBar(), 300, 465);
                 addedHpBar = true;

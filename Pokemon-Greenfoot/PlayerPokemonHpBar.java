@@ -14,11 +14,13 @@ public class PlayerPokemonHpBar extends Battle
      */
     GreenfootImage image = new GreenfootImage("images/BattleImages/HPPlayer.png");
     boolean addedHpBar = false;
-    private int maxHealth = 300; 
-    private int curHealth = 300;
-    SuperStatBar hpBar;
-    public PlayerPokemonHpBar(){
+    private int maxHealth; 
+    private int curHealth;
+    public SuperStatBar hpBar;
+    public PlayerPokemonHpBar(int maxHp, int curHp){
         setImage(image);
+        maxHealth = maxHp;
+        curHealth = curHp;
     }
     
     public void act()

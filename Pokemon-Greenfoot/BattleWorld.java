@@ -30,6 +30,8 @@ public class BattleWorld extends World
     
     SuperTextBox startText;
     SuperTextBox sendPokemonText;
+    SuperDisplayLabel pPokemonSpeciesLabel;
+    SuperDisplayLabel ePokemonSpeciesLabel;
     /**
      * Constructor for objects of class BattleWorld.
      * 
@@ -47,11 +49,12 @@ public class BattleWorld extends World
         addObject(new EnemyPlatform(), 450, 200);
         addObject(new Trainer(), 300, 252);
         
+        
         // Generate player and enemy pokemon data as turtwig
         Pokemon t = new Pokemon(); // Turtwig base
         t.staticImg = new GreenfootImage("images/BattleImages/TurtwigBack/0.png");
         t.maxHealth = 15;
-        t.health = 15;
+        t.health = 10;
         t.moves = new String[1];
         t.moves[0] = "Razor Leaf";
         t.moveDmg = new int[1];
@@ -100,6 +103,12 @@ public class BattleWorld extends World
     }
     
     public void mainMenu(){
+        pPokemonSpeciesLabel = new SuperDisplayLabel(80, new Font(false, false, 16));
+        addObject(pPokemonSpeciesLabel, 430, 275);
+        pPokemonSpeciesLabel.update(pPokemon.pokemonSpecies, true);
+        ePokemonSpeciesLabel = new SuperDisplayLabel(80, new Font(false, false, 16));
+        addObject(ePokemonSpeciesLabel, 100, 110);
+        ePokemonSpeciesLabel.update(ePokemon.pokemonSpecies, true);
         
         if (fightButton != null) return;
         
@@ -144,14 +153,13 @@ public class BattleWorld extends World
     }
     
     public void spawnHpBar(){
-        playerHP =  new PlayerPokemonHpBar();
-        enemyHP = new EnemyPokemonHpBar();
+        playerHP =  new PlayerPokemonHpBar(pPokemon.maxHealth, pPokemon.health);
+        enemyHP = new EnemyPokemonHpBar(ePokemon.maxHealth, ePokemon.health);
         addObject(playerHP, 468, 400);
         addObject(enemyHP, 100, 37);
     }
     
     public void act(){
-        
         if(Greenfoot.mouseClicked(null) ){
             if (fightButton != null && fightButton.mouseHoveringOver() && !menuType){
                 fightMenu();
@@ -168,6 +176,17 @@ public class BattleWorld extends World
         if ( attacking && Greenfoot.isKeyDown("escape") && menuType){
             mainMenu();
         }
+        
+        /*THIS IS FOR THE HP BAR TO WORK DONT TOUCH THIS
+         *  BEING USED FOR REFERENCE WHEN ATTACKS HAPPEN 
+         */
+        if(Greenfoot.isKeyDown("a")){
+            System.out.println(enemyHP.curHealth);
+            enemyHP.curHealth--;
+            ePokemon.health--;
+            enemyHP.hpBar.update(ePokemon.health);
+        }
+        
     }
     
     public void attack(int attack){
@@ -175,6 +194,8 @@ public class BattleWorld extends World
         
         // Enemy AI
         pPokemon.health -= ePokemon.moveDmg[attack];
+        enemyHP.hpBar.update(pPokemon.health);
+        System.out.println(ePokemon.health);
     }
     
     
