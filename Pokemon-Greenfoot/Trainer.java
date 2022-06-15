@@ -1,5 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-
+import java.util.List;
 /**
  * Write a description of class Trainer here.
  * 
@@ -26,6 +26,9 @@ public class Trainer extends Battle
     {  
         if(Greenfoot.isKeyDown("Enter")){
             startAnimations = true;
+            List<SuperTextBox> textboxes = getWorld().getObjects(SuperTextBox.class);
+            getWorld().removeObjects(textboxes);
+            getWorld().addObject(new SuperTextBox("Go, Turtwig!", new Font(false, false, 16), 100), 250, 450);
         }
         if(startAnimations){
             move(-4);
@@ -46,6 +49,7 @@ public class Trainer extends Battle
             if(i-40 == 0){
                 image = new GreenfootImage("images/BattleTrainerImages/boy4.png");
                 setImage(image);
+                getWorld().removeObject(this);
             }
         }
         

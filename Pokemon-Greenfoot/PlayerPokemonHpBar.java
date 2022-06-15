@@ -1,5 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-
+import java.util.List;
 /**
  * Write a description of class PlayerPokemonHpBar here.
  * 
@@ -28,6 +28,8 @@ public class PlayerPokemonHpBar extends Battle
         }
         if(getY() <= 300){
             if(Greenfoot.isKeyDown("Enter")){
+                List<SuperTextBox> textboxes = getWorld().getObjects(SuperTextBox.class);
+                getWorld().removeObjects(textboxes);
                 ((BattleWorld) getWorld()).mainMenu();
             }
             if(!addedHpBar){

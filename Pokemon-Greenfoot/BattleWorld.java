@@ -27,6 +27,9 @@ public class BattleWorld extends World
     
     private PlayerPokemonHpBar playerHP;
     private EnemyPokemonHpBar enemyHP;
+    
+    SuperTextBox startText;
+    SuperTextBox sendPokemonText;
     /**
      * Constructor for objects of class BattleWorld.
      * 
@@ -84,6 +87,10 @@ public class BattleWorld extends World
         // Init attackButtons
         attackButtons = new BattleButton[0];
         
+        startText = new SuperTextBox("A Wild "+ePokemon.pokemonSpecies+" has appeared!", new Font(false, false, 16), 250);
+        sendPokemonText = new SuperTextBox("Go, Turtwig", new Font(false, false, 16), 100);
+        
+        addObject(startText, 250, 450);
     }
     
     public void addPlayerPokemon(){
