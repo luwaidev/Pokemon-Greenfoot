@@ -27,8 +27,7 @@ public class PokeBallExplosion extends Battle
             image = new GreenfootImage("images/PokeBallExplosion/" + b + ".png");
             setImage(image);
             if(a/5 == 6){
-                getWorld().addObject(new PlayerPokemonHpBar(), 468, 400);
-                getWorld().addObject(new EnemyPokemonHpBar(), 100, 37);
+                ((BattleWorld) getWorld()).spawnHpBar();
                 getWorld().removeObject(this);
             }
         }

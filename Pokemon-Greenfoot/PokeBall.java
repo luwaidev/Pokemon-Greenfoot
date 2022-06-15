@@ -39,6 +39,7 @@ public class PokeBall extends Battle
             setImage("images/BattleImages/openedPokeBall.png");
         }
         if(a == 68){
+            ((BattleWorld) getWorld()).addPlayerPokemon();
             getWorld().addObject(new PokeBallExplosion(), this.getX(), this.getY());
             getWorld().removeObject(this);
         }

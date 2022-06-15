@@ -53,6 +53,11 @@ public class BattleButton extends Battle
         hoverOwner();
         return actorHoveredOver == actor;
     }
+    
+    public boolean mouseHoveringOver() {
+        hoverOwner();
+        return actorHoveredOver == this;
+    }
  
     /**
      * Gets the button that the mouse is hovering over.
