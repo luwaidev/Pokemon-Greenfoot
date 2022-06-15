@@ -23,7 +23,10 @@ public class BattleWorld extends World
     private BattleButton runButton;
     private BattleButton[] attackButtons;
     private boolean menuType = false;
-    private boolean attacking;
+    private boolean attacking = false;
+    
+    private PlayerPokemonHpBar playerHP;
+    private EnemyPokemonHpBar enemyHP;
     /**
      * Constructor for objects of class BattleWorld.
      * 
@@ -120,14 +123,20 @@ public class BattleWorld extends World
             if (i <= 1){
                 addObject(attackButtons[i], i==0?110:340,430);
             }   else {
-                if (i <= 1){
-                    addObject(attackButtons[i], i==0?110:340,475);
+                if (i <= 3){
+                    addObject(attackButtons[i], i==2?110:340,475);
                 }
             }
         }
         
         menuType = true;
-
+    }
+    
+    public void spawnHpBar(){
+        playerHP =  new PlayerPokemonHpBar();
+        enemyHP = new EnemyPokemonHpBar();
+        addObject(playerHP, 468, 400);
+        addObject(enemyHP, 100, 37);
     }
     
     public void act(){
@@ -137,15 +146,25 @@ public class BattleWorld extends World
                 fightMenu();
             }
             
+            for (int i = 0; i < attackButtons.length; i++){
+                if (attackButtons[i] != null && attackButtons[i].mouseHoveringOver() && menuType){
+                    attack(i);
+                }
+            }
+            
         }
         
-        System.out.println(Greenfoot.isKeyDown("escape") && menuType);
-        if (Greenfoot.isKeyDown("escape") && menuType){
+        if ( attacking && Greenfoot.isKeyDown("escape") && menuType){
             mainMenu();
         }
     }
     
-    public void StartBattle(){
+    public void attack(int attack){
+        ePokemon.health -= pPokemon.moveDmg[attack];
         
+        // Enemy AI
+        pPokemon.health -= ePokemon.moveDmg[attack];
     }
+    
+    
 }
