@@ -22,7 +22,6 @@ public class PokeBallExplosion extends Battle
     public void act()
     {
         a++;
-        //System.out.println(a%20);
         if(a%5 == 0){
             b++;
             image = new GreenfootImage("images/PokeBallExplosion/" + b + ".png");

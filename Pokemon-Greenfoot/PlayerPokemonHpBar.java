@@ -1,5 +1,5 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
-
+import java.util.List;  
 /**
  * Write a description of class PlayerPokemonHpBar here.
  * 
@@ -27,16 +27,20 @@ public class PlayerPokemonHpBar extends Battle
             setLocation(getX(), getY() - 3);
         }
         if(getY() <= 300){
+            
             if(Greenfoot.isKeyDown("Enter")){
                 getWorld().addObject(new BattleButton("Fight"), 110, 430);
                 getWorld().addObject(new BattleButton("Bag"), 340, 430);
                 getWorld().addObject(new BattleButton("Pokemon"), 110, 475);
                 getWorld().addObject(new BattleButton("Run"), 340, 475);
+                List<SuperTextBox> textBoxes = getWorld().getObjects(SuperTextBox.class);  
+                getWorld().removeObjects(textBoxes);
             }
             if(!addedHpBar){
                 hpBar = new SuperStatBar(maxHealth, curHealth, this, 100, 8, 0, Color.GREEN, Color.BLACK, false, Color.BLACK, 1);
                 getWorld().addObject(hpBar, 0, 0);
                 addedHpBar = true;
+                
                 
             }
             //curHealth--;
