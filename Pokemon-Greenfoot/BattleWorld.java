@@ -11,7 +11,7 @@ public class BattleWorld extends World
     public boolean playerTurn;
     private int time;    
     
-    
+    private Pokemon[] enemies;
     private Pokemon pPokemon;
     private Pokemon ePokemon;
     private EnemyPokemon e;
@@ -53,6 +53,7 @@ public class BattleWorld extends World
         t.moves[0] = "Razor Leaf";
         t.moveDmg = new int[1];
         t.moveDmg[0] = 1;
+        t.pokemonSpecies = "Turtwig";
         
         pPokemon = new Pokemon();
         pPokemon.staticImg = t.staticImg;
@@ -60,6 +61,7 @@ public class BattleWorld extends World
         pPokemon.health = t.health;
         pPokemon.moves = t.moves;
         pPokemon.moveDmg = t.moveDmg;
+        pPokemon.pokemonSpecies = t.pokemonSpecies;
         
         
         ePokemon = new Pokemon();
@@ -68,6 +70,8 @@ public class BattleWorld extends World
         ePokemon.health = t.health;
         ePokemon.moves = t.moves;
         ePokemon.moveDmg = t.moveDmg;
+        
+        ePokemon.pokemonSpecies = t.pokemonSpecies;
         
         // Scale image smaller
         e = new EnemyPokemon();

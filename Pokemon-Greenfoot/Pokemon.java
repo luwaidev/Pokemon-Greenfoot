@@ -12,6 +12,7 @@ public class Pokemon
     // Could create text files to record the stats of different pokemon but I don't wanna set up a system to get that working lmao
     public GreenfootImage staticImg;
     public String name;
+    public String pokemonSpecies;
     
     public int health;
     public int maxHealth;
