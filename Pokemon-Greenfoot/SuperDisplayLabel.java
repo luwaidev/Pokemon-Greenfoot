@@ -32,7 +32,7 @@ public class SuperDisplayLabel extends Actor
 
     public SuperDisplayLabel (int width, Font font)
     {
-        image = new GreenfootImage (width, (int)(font.getSize() * 1.2));
+        image = new GreenfootImage (width, (int)(font.getSize() * 1.8));
         // Declare colour objects for use within this class (red and white)
         this.backColor = new Color (175, 20, 23);
         this.foreColor = new Color (255, 255, 255);
