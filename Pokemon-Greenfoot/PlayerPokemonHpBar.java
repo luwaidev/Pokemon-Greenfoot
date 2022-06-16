@@ -33,7 +33,7 @@ public class PlayerPokemonHpBar extends Battle
                 List<SuperTextBox> textboxes = getWorld().getObjects(SuperTextBox.class);
                 getWorld().removeObjects(textboxes);
                 ((BattleWorld) getWorld()).mainMenu();
-                hpBar = new SuperStatBar(maxHealth, curHealth, this, 100, 8, 0, Color.GREEN, Color.BLACK, false, Color.BLACK, 1);
+                hpBar = new SuperStatBar(maxHealth, curHealth, this, 100, 8, 0, Color.GREEN, Color.LIGHT_GRAY, false, Color.BLACK, 1);
                 getWorld().addObject(hpBar, 0, 0);
                 addedHpBar = true;
             }

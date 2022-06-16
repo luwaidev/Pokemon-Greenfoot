@@ -21,7 +21,7 @@ public class EnemyPokemonHpBar extends Battle
         setImage(image);
         maxHealth = maxHp;
         curHealth = curHp;
-        hpBar = new SuperStatBar(maxHealth, curHealth, this, 100, 8, 6, Color.GREEN, Color.BLACK, false, Color.BLACK, 1);
+        hpBar = new SuperStatBar(maxHealth, curHealth, this, 100, 8, 6, Color.GREEN, Color.LIGHT_GRAY, false, Color.BLACK, 1);
     }
     
     public void act()

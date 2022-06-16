@@ -51,41 +51,36 @@ public class BattleWorld extends World
         addObject(new Trainer(), 300, 252);
         
         // Generate player and enemy pokemon data as turtwig
-        Pokemon t = new Pokemon(); // Turtwig base
-        t.staticImg = new GreenfootImage("images/BattleImages/TurtwigBack/0.png");
-        t.maxHealth = 15;
-        t.health = 15;
-        t.moves = new String[1];
-        t.moves[0] = "Razor Leaf";
-        t.moveDmg = new int[1];
-        t.moveDmg[0] = 1;
-        t.pokemonSpecies = "Turtwig";
+        
+        ePokemon= new Pokemon(); // Turtwig base
+        ePokemon.staticImg = new GreenfootImage("images/BattleImages/PidgeyFront/0.png");
+        ePokemon.maxHealth = 15;
+        ePokemon.health = 15;
+        ePokemon.moves = new String[1];
+        ePokemon.moves[0] = "Gust";
+        ePokemon.moveDmg = new int[1];
+        ePokemon.moveDmg[0] = 1;
+        ePokemon.pokemonSpecies = "Pidgey";
         
         pPokemon = new Pokemon();
-        pPokemon.staticImg = t.staticImg;
-        pPokemon.maxHealth = t.maxHealth;
-        pPokemon.health = t.health;
-        pPokemon.moves = t.moves;
-        pPokemon.moveDmg = t.moveDmg;
-        pPokemon.pokemonSpecies = t.pokemonSpecies;
-        
-        
-        ePokemon = new Pokemon();
-        ePokemon.staticImg = t.staticImg;
-        ePokemon.maxHealth = t.maxHealth;
-        ePokemon.health = t.health;
-        ePokemon.moves = t.moves;
-        ePokemon.moveDmg = t.moveDmg;
-        
-        ePokemon.pokemonSpecies = t.pokemonSpecies;
+        pPokemon.staticImg = new GreenfootImage("images/BattleImages/TurtwigBack/0.png");
+        pPokemon.maxHealth = 20;
+        pPokemon.health = 20;
+        pPokemon.moves = new String[2];
+        pPokemon.moves[0] = "RazorLeaf";
+        pPokemon.moves[1] = "Tackle";
+        pPokemon.moveDmg = new int[2];
+        pPokemon.moveDmg[0] = 2;
+        pPokemon.moveDmg[1] = 1;
+        pPokemon.pokemonSpecies = "Turtwig";
         
         // Scale image smaller
         e = new EnemyPokemon();
         //GreenfootImage image = new GreenfootImage(t.staticImg.toString());
         //image.mirrorHorizontally();
         //image.scale(image.getWidth()/3*2, image.getHeight()/3*2); 
-        e.setImage(t.staticImg); 
-        addObject(e,450,100);
+        e.setImage(ePokemon.staticImg); 
+        addObject(e,460,120);
         
         // Init attackButtons
         attackButtons = new BattleButton[0];
@@ -139,7 +134,7 @@ public class BattleWorld extends World
         
         attackButtons = new BattleButton[pPokemon.moves.length];
         for (int i = 0; i < pPokemon.moves.length; i++ ){
-            attackButtons[i] = new BattleButton("Fight");
+            attackButtons[i] = new BattleButton(pPokemon.moves[i]);
             if (i <= 1){
                 addObject(attackButtons[i], i==0?110:340,430);
             }   else {
@@ -195,12 +190,19 @@ public class BattleWorld extends World
         // Enemy AI
         pPokemon.health -= ePokemon.moveDmg[attack];
         enemyHP.hpBar.update(pPokemon.health);
-        removeObject(attackButtons[0]);
+        
+        for (int  i =0 ; i < attackButtons.length;i++){
+            removeObject(attackButtons[i]);
+        }
         attacking = true;
-        SuperTextBox attackText = new SuperTextBox("Your "+ ePokemon.pokemonSpecies + " used " +  pPokemon.moves[0], new Font(false, false, 16), 250);
+        SuperTextBox attackText = new SuperTextBox("Your "+ pPokemon.pokemonSpecies + " used " +  pPokemon.moves[0], new Font(false, false, 16), 250);
         addObject(attackText, 250, 450);
         addObject(new AttackAnimation(), 300, 300);
         System.out.println(ePokemon.health);
+    }
+    
+    public void enemyAttack(int attack){
+        
     }
     
     
