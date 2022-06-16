@@ -12,6 +12,9 @@ public class Player extends Actor
     static int speed = 2; 
     static int originalX, originalY; 
     static int worldX, worldY; 
+    boolean openBag;
+    private int xCoord;
+    private int yCoord;
     /**
      * Act - do whatever the Player wants to do. This method is called whenever
      * the 'Act' or 'Run' button gets pressed in the environment.
@@ -20,6 +23,7 @@ public class Player extends Actor
     {
         // Add your action code here.
         move();
+        checkBag(); 
     }
     
     public void move(){
@@ -38,6 +42,13 @@ public class Player extends Actor
         if(Greenfoot.isKeyDown("down")){
             setRotation(90);
             move(speed);
+        }
+    }
+    public void checkBag(){
+        if(Greenfoot.isKeyDown("b")){
+            
+            openBag = true; 
+            Greenfoot.setWorld(new Bag(this.getX(), this.getY()));
         }
     }
 }

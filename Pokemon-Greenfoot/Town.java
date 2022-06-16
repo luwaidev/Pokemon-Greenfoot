@@ -386,12 +386,17 @@ public class Town extends World
                 try{
                     if(theMovementGrid[gridPosX][gridPosY-1] == 1 || theMovementGrid[gridPosX][gridPosY-1] == 2)
                     {
+                        System.out.println("Hi"); 
                         if(theMovementGrid[gridPosX][gridPosY-1] == 3)
-                        {
-                            boolean newPlace = random.nextBoolean();
+                        {   
+                            System.out.println("HI"); 
+                            boolean newPlace = true;
                             if(newPlace)
                             {
                                 //put in code to go into new world
+                                System.out.println("HI");
+                                Greenfoot.setWorld(new House()); 
+                                System.out.println("hi");
                             }
                         }
                         moving = true;
@@ -422,6 +427,9 @@ public class Town extends World
                             if(newPlace)
                             {
                                 //put in code to go into new world
+                                System.out.println("hi");
+                                Greenfoot.setWorld(new House()); 
+                                System.out.println("hi");
                             }
                         }
                         moving = true;
