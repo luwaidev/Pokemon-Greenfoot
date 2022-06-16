@@ -355,6 +355,7 @@ public class Town extends World
                             if(fight)
                             {
                                 //put in code to go into battle mode
+                                enterBattle();
                             }
                         }
                     }
@@ -381,6 +382,7 @@ public class Town extends World
                             if(fight)
                             {
                                 //put in code to go into battle mode
+                                enterBattle();
                             }
                         }
                     }
@@ -407,6 +409,7 @@ public class Town extends World
                             if(fight)
                             {
                                 //put in code to go into battle mode
+                                enterBattle();
                             }
                         }
                     }
@@ -433,6 +436,7 @@ public class Town extends World
                             if(fight)
                             {
                                 //put in code to go into battle mode
+                                enterBattle();
                             }
                         }
                     }
@@ -442,6 +446,11 @@ public class Town extends World
                 }
             }
         }
+    }
+    
+    public void enterBattle(){
+        
+        Greenfoot.setWorld(new BattleWorld());
     }
 
     public void pauseScreen()
