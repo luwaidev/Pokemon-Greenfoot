@@ -3,6 +3,7 @@ import java.util.ArrayList;
 /**
  * These rectangles are used in the title screen class to darken options 
  * and also to detect for buttons
+ * also used to make pause screen
  * 
  * @author Nathan Thian 
  * @version April 24, 2022
