@@ -23,7 +23,7 @@ public class BattleWorld extends World
     private BattleButton runButton;
     private BattleButton[] attackButtons;
     private boolean menuType = false;
-    private boolean attacking = false;
+    public boolean attacking = false;
     
     private PlayerPokemonHpBar playerHP;
     private EnemyPokemonHpBar enemyHP;
@@ -37,10 +37,11 @@ public class BattleWorld extends World
      * 
      */
     public BattleWorld()
-    {    
+    { 
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
         super(600, 500, 1); 
         setBackground("images/BattleImages/routeBackground.jpeg");
+        
         
         
         
@@ -49,12 +50,11 @@ public class BattleWorld extends World
         addObject(new EnemyPlatform(), 450, 200);
         addObject(new Trainer(), 300, 252);
         
-        
         // Generate player and enemy pokemon data as turtwig
         Pokemon t = new Pokemon(); // Turtwig base
         t.staticImg = new GreenfootImage("images/BattleImages/TurtwigBack/0.png");
         t.maxHealth = 15;
-        t.health = 10;
+        t.health = 15;
         t.moves = new String[1];
         t.moves[0] = "Razor Leaf";
         t.moveDmg = new int[1];
@@ -160,7 +160,7 @@ public class BattleWorld extends World
     }
     
     public void act(){
-        if(Greenfoot.mouseClicked(null) ){
+        if(Greenfoot.mouseClicked(null) && !attacking){
             if (fightButton != null && fightButton.mouseHoveringOver() && !menuType){
                 fightMenu();
             }
@@ -173,7 +173,7 @@ public class BattleWorld extends World
             
         }
         
-        if ( attacking && Greenfoot.isKeyDown("escape") && menuType){
+        if (!attacking && Greenfoot.isKeyDown("escape") && menuType){
             mainMenu();
         }
         
@@ -191,10 +191,15 @@ public class BattleWorld extends World
     
     public void attack(int attack){
         ePokemon.health -= pPokemon.moveDmg[attack];
-        
+        enemyHP.curHealth = ePokemon.health;
         // Enemy AI
         pPokemon.health -= ePokemon.moveDmg[attack];
         enemyHP.hpBar.update(pPokemon.health);
+        removeObject(attackButtons[0]);
+        attacking = true;
+        SuperTextBox attackText = new SuperTextBox("Your "+ ePokemon.pokemonSpecies + " used " +  pPokemon.moves[0], new Font(false, false, 16), 250);
+        addObject(attackText, 250, 450);
+        addObject(new AttackAnimation(), 300, 300);
         System.out.println(ePokemon.health);
     }
     
