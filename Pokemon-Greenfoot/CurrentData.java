@@ -11,6 +11,7 @@ public class CurrentData
     public int posY;
     
     public Pokemon pPokemon;
+    
 
     /**
      * Constructor for objects of class BattleData
