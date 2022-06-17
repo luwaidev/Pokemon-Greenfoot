@@ -101,8 +101,7 @@ public class Town extends World
     public Town(int x, int y, int health)
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
-        super(WIDE, HIGH, 1, false); 
-        
+        super(WIDE, HIGH, 1, false);
 
         pokemonHealth = health;
         gridPosX = x;
@@ -349,7 +348,7 @@ public class Town extends World
                         scrollActor.move((int)moveX);
                         moving = false;
                         gridPosX++;
-                        if(theMovementGrid[gridPosX+1][gridPosY] == 2)
+                        if(theMovementGrid[gridPosX][gridPosY] == 2)
                         {
                             boolean fight = random.nextBoolean();
                             if(fight)
@@ -376,7 +375,7 @@ public class Town extends World
                         scrollActor.move((int)moveX);
                         moving = false;
                         gridPosX--;
-                        if(theMovementGrid[gridPosX-1][gridPosY] == 2)
+                        if(theMovementGrid[gridPosX][gridPosY] == 2)
                         {
                             boolean fight = random.nextBoolean();
                             if(fight)
@@ -403,7 +402,7 @@ public class Town extends World
                         scrollActor.move((int)moveY);
                         moving = false;
                         gridPosY--;
-                        if(theMovementGrid[gridPosX][gridPosY-1] == 2)
+                        if(theMovementGrid[gridPosX][gridPosY] == 2)
                         {
                             boolean fight = random.nextBoolean();
                             if(fight)
@@ -430,7 +429,7 @@ public class Town extends World
                         scrollActor.move((int)moveY);
                         moving = false;
                         gridPosY++;
-                        if(theMovementGrid[gridPosX][gridPosY+1] == 2)
+                        if(theMovementGrid[gridPosX][gridPosY] == 2)
                         {
                             boolean fight = random.nextBoolean();
                             if(fight)
@@ -447,9 +446,9 @@ public class Town extends World
             }
         }
     }
-    
+
     public void enterBattle(){
-        
+
         Greenfoot.setWorld(new BattleWorld());
     }
 
@@ -485,7 +484,27 @@ public class Town extends World
             Storer.setSave(4,0,gridPosX);
             Storer.setSave(4,1,gridPosY);
             Storer.setSave(4,2,pokemonHealth);
-        } else if(Greenfoot.isKeyDown("shift"))
+        } else if(Greenfoot.isKeyDown("5"))
+        {
+            Storer.setSave(1,0,-1);
+            Storer.setSave(1,1,-1);
+            Storer.setSave(1,2,-1);
+        }else if(Greenfoot.isKeyDown("6"))
+        {
+            Storer.setSave(2,0,-1);
+            Storer.setSave(2,1,-1);
+            Storer.setSave(2,2,-1);
+        }else if(Greenfoot.isKeyDown("7"))
+        {
+            Storer.setSave(3,0,-1);
+            Storer.setSave(3,1,-1);
+            Storer.setSave(3,2,-1);
+        }else if(Greenfoot.isKeyDown("8"))
+        {
+            Storer.setSave(4,0,-1);
+            Storer.setSave(4,1,-1);
+            Storer.setSave(4,2,-1);
+        }else if(Greenfoot.isKeyDown("shift"))
         {
             removeObject(pauseBox);
             rectCheck = 0;

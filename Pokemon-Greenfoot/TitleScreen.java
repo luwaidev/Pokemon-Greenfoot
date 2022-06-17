@@ -171,7 +171,7 @@ public class TitleScreen extends World
     private void prepare()
     {
         // labels for title
-        label2 = new Label("Press <space> to start", 40);
+        label2 = new Label("Press <shift> to start", 40);
         addObject(label2,getWidth()/2,getHeight()*2/4);
         label2.setFillColor(Color.BLACK);
         label2.getImage().setTransparency(0);
@@ -260,7 +260,7 @@ public class TitleScreen extends World
      */
     public void startMethod()
     {
-        if(Greenfoot.isKeyDown("space"))
+        if(Greenfoot.isKeyDown("shift"))
         {
             //loop through every different array of the different components' buttons
             for(SuperTextBox selected : saveFiles)
@@ -269,7 +269,6 @@ public class TitleScreen extends World
                 //value as the value for cherries that will be used in the main world
                 if(selected.checkSelected())
                 {
-                    System.out.println(selected.getValue());
                     if(Storer.getSave(selected.getValue(),0) == -1)
                     {
                         locationX = 65;
