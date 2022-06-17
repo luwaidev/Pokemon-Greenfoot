@@ -85,13 +85,13 @@ public class Town extends World
         pokemonHealth = health;
         gridPosX = x;
         gridPosY = y;
-        
+
         //sets the position the player will be added to on the background image to the actual location of the player
         //not just the grid position
         //remember that tiles are 10 pixels by 10 pixels
         originalX = gridPosX * 10;
         originalY = gridPosY*10;
-        
+
         //makes grid with dimensions factored into the world
         //should be 140 grids for x and 100 grids for y
         gridX = (int)(1400.00*worldFactor);
@@ -111,14 +111,14 @@ public class Town extends World
                 theMovementGrid[i][j] = 1;
             }
         }
-        
+
         //boundaries for movement are set here
         setBoundaries();
-        
+
         //player and scroller are added here
         addPlayer(); 
     }
-    
+
     /**
      * this method is what sets the boundaries for movement on the grid and also player grid interactions
      */
@@ -174,7 +174,7 @@ public class Town extends World
                 theMovementGrid[i][j] = 0;
             }
         }
-        
+
         //starts to fill in grass with interactions aka 2
         for(int i = 25; i<37; i++)
         {
@@ -218,7 +218,7 @@ public class Town extends World
                 theMovementGrid[i][j] = 2;
             }
         }
-        
+
         //fills in doors with 3, so players can move through with a method
         for(int i = 63; i<68; i++)
         {
@@ -332,7 +332,7 @@ public class Town extends World
         scroll();
     }
 
-     /**
+    /**
      * Method that goes through with the scrolling in the world (NOT MADE BY US, part of scroller class)
      */
     public void scroll()
@@ -345,7 +345,7 @@ public class Town extends World
         }
     }
 
-     /**
+    /**
      * This method checks for key presses and moves the player correspondingly
      * also checks for interactions with boundaries, grass, doors, etc
      * this is where the movement grid comes in
@@ -357,22 +357,23 @@ public class Town extends World
         //move y is the amount of pixels players move for each movement
         //pixels in y dimension divided by number of grids for y
         double moveY = (1000.00/gridY);
-        
+
         //if not already moving...; helps to prevent diagonal movement 
         //and makes it seems more like classic pokemon movement; robust
         if(!moving){
             //if right arrow key is pressed...
             if (Greenfoot.isKeyDown("right")){
                 try{
+                    //if the grid you are trying to move to is 3 (a door that leads to somewhere)
+                    if(theMovementGrid[gridPosX+1][gridPosY] == 3)
+                    {
+                        //put in code to go into new world
+                    }
                     //if the grid you are trying to move to is a path(1) or
                     //grass block(2)
-                    if(theMovementGrid[gridPosX+1][gridPosY] == 1 || theMovementGrid[gridPosX+1][gridPosY] == 2)
+                    else if(theMovementGrid[gridPosX+1][gridPosY] == 1 || theMovementGrid[gridPosX+1][gridPosY] == 2)
                     {
-                         //if the grid you are trying to move to is 3 (a door that leads to somewhere)
-                        if(theMovementGrid[gridPosX+1][gridPosY] == 3)
-                        {
-                            //put in code to go into new world
-                        }
+
                         //sets the currently moving to true
                         moving = true;
                         //turns the player so it faces right and moves it the appropriate amount
@@ -402,12 +403,12 @@ public class Town extends World
             } else if (Greenfoot.isKeyDown("left")){
                 //same code basically as right
                 try{
-                    if(theMovementGrid[gridPosX-1][gridPosY] == 1 || theMovementGrid[gridPosX-1][gridPosY] == 2)
+                    if(theMovementGrid[gridPosX-1][gridPosY] == 3)
                     {
-                        if(theMovementGrid[gridPosX-1][gridPosY] == 3)
-                        {
-                            //put in code to go into new world
-                        }
+                        //put in code to go into new world
+                    }
+                    else if(theMovementGrid[gridPosX-1][gridPosY] == 1 || theMovementGrid[gridPosX-1][gridPosY] == 2)
+                    {
                         moving = true;
                         scrollActor.setRotation(180);
                         scrollActor.move((int)moveX);
@@ -430,12 +431,13 @@ public class Town extends World
             } else if (Greenfoot.isKeyDown("up")){
                 //same code basically as right
                 try{
-                    if(theMovementGrid[gridPosX][gridPosY-1] == 1 || theMovementGrid[gridPosX][gridPosY-1] == 2)
+                    if(theMovementGrid[gridPosX][gridPosY-1] == 3)
                     {
-                        if(theMovementGrid[gridPosX][gridPosY-1] == 3)
-                        {
-                            //put in code to go into new world
-                        }
+                        //put in code to go into new world
+                        System.out.println("move");
+                    }
+                    else if(theMovementGrid[gridPosX][gridPosY-1] == 1 || theMovementGrid[gridPosX][gridPosY-1] == 2)
+                    {
                         moving = true;
                         scrollActor.setRotation(270);
                         scrollActor.move((int)moveY);
@@ -458,12 +460,12 @@ public class Town extends World
             } else if (Greenfoot.isKeyDown("down")) {
                 //same code basically as right
                 try{
-                    if(theMovementGrid[gridPosX][gridPosY+1] == 1 || theMovementGrid[gridPosX][gridPosY+1] == 2)
+                    if(theMovementGrid[gridPosX][gridPosY+1] == 3)
                     {
-                        if(theMovementGrid[gridPosX][gridPosY+1] == 3)
-                        {
-                            //put in code to go into new world
-                        }
+                        //put in code to go into new world
+                    }
+                    else if(theMovementGrid[gridPosX][gridPosY+1] == 1 || theMovementGrid[gridPosX][gridPosY+1] == 2)
+                    {
                         moving = true;
                         scrollActor.setRotation(90);
                         scrollActor.move((int)moveY);
