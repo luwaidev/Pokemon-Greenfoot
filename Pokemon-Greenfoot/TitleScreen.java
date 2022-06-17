@@ -13,19 +13,20 @@ public class TitleScreen extends World
     //the font that is used for everything
     Font boringFont = new Font ("Times New Roman", false, false, 14);
 
+    //class that stores all save information
     Storer storer = new Storer();
-    
+
     //these variables keep track of the mouse's position on the screen
     private int mx = 0;
     private int my = 0;
 
-    private boolean boy;
-
+    //these boxes are the boxes that show selections
     SuperTextBox saveButtonOne;
     SuperTextBox saveButtonTwo;
     SuperTextBox saveButtonThree;
     SuperTextBox saveButtonFour;
-    
+
+    //these are the variables that will be used to initialize the town world
     private int locationX;
     private int locationY;
     private int pokemonHealth;
@@ -40,15 +41,20 @@ public class TitleScreen extends World
     GreenfootImage background = new GreenfootImage("titleBackground.jpg");
     GreenfootImage pokemonPic = new GreenfootImage("Pokemonlogo.png");
 
+    //extra instructions on screen
     Label label2;
     Label label3;
 
+    //used to control the fading in and out of pokemon logo
     private int transparencies;
 
+    //pokemon logo picture
     TitlePictures pokemon;
 
+    //boolean that checks if the intro sequence is over
     private boolean doneIntro;
 
+    //pokemon logo width and height used
     private int pokemonWidth;
     private int pokemonHeight;
     /**
@@ -63,53 +69,64 @@ public class TitleScreen extends World
         //sets the background
         setBackground(background);
 
+        //intro has not happened so done intro is false
         doneIntro = false;
 
+        //initialize pokemon logo
         pokemon = new TitlePictures();
         pokemon.setImage(pokemonPic);
+        //scale that works best on the picture
         pokemonPic.scale(10,5);
+        //added to top left of the world
         addObject(pokemon,0,125);
 
+        //curently logo is transparent
         transparencies = 0;
 
+        //sets width and height of variables according to picture
         pokemonWidth = pokemonPic.getWidth();
         pokemonHeight = pokemonPic.getHeight();
 
         //gets all the items on screen ready
         prepare();
 
-        //addObject(new SoundPlayer(), 1000, 1000);
     }
 
     public void pokemonOntoScreen()
     {
+        //if the pokemon logo has not reached desired width and height yet...
         if(pokemonWidth < 790)
         {
+            //increase width and height to simulate getting bigger
             pokemonWidth+=10;
             pokemonHeight+=5;
+            //initializes the pokemon logo image and sets scale accordingly with the object
             GreenfootImage image = new GreenfootImage("Pokemonlogo.png");
             image.scale(pokemonWidth, pokemonHeight);
             pokemon.setImage(image);
         } 
+        //pokemon logo gradually moves to the centre of the screen
         if(pokemon.getX() < 400)
         {
             pokemon.move(6);
         }
+        //pokemon logo gradually becomes less transparent
         if(transparencies < 253)
         {
+            //gradually makes everything less transparent
             transparencies+= 3;
             label2.getImage().setTransparency(transparencies);
             label3.getImage().setTransparency(transparencies);
         } else
         {
+            //if all this is done then start putting in options
             doneIntro = true;
             putSelections();
         }
     }
 
     /**
-     * The main world act loop
-     * keeps track of everything that happens and allows user to interact
+     * Act loop here keeps track of selections for the game after the intro is done
      */
     public void act()
     {
@@ -126,14 +143,11 @@ public class TitleScreen extends World
             //starts game with selected options if user presses <space>
             startMethod();
         }
-
     }
 
     public void putSelections()
     {
-
         //adding boxes that you can click for customizing
-        //cherry buttons
         //sets buttons' values corresponding to the values set in the variables created during initialization
         saveButtonOne = new SuperTextBox("Save One",Color.WHITE, Color.BLACK, boringFont,true,this.getWidth()/10,1,Color.BLACK); 
         saveButtonOne.setValue(1);
@@ -170,7 +184,8 @@ public class TitleScreen extends World
      */
     private void prepare()
     {
-        // labels for title
+        // labels for title and extra labels
+
         label2 = new Label("Press <shift> to start", 40);
         addObject(label2,getWidth()/2,getHeight()*2/4);
         label2.setFillColor(Color.BLACK);
@@ -207,18 +222,18 @@ public class TitleScreen extends World
                 ArrayList<SuperTextBox> textBoxes = checker.getIntersectingTextBoxes();
                 for(SuperTextBox box : textBoxes)
                 {
-                    //cycle thrugh every button that the checker rectangle is touching
+                    //cycle through every button that the checker rectangle is touching
                     for(SuperTextBox test : saveFiles)
                     {
-                        //for every cherry button in the world check if that is the button being clicked by the user
+                        //for every button in the world check if that is the button being clicked by the user
                         if(test.equals(box))
                         {
-                            //if this specific cherry button is being selected, deselect every cherry button in the world
+                            //if this specific button is being selected, deselect every  button in the world
                             for(SuperTextBox cherryLabels : saveFiles)
                             {
                                 cherryLabels.setIsSelected(false);
                             }
-                            //set the one selected cherry button to be the only selected one
+                            //set the one selected button to be the only selected one
                             box.setIsSelected(true);
                         }
                     }
@@ -262,13 +277,13 @@ public class TitleScreen extends World
     {
         if(Greenfoot.isKeyDown("shift"))
         {
-            //loop through every different array of the different components' buttons
+            //loop through every different array 
             for(SuperTextBox selected : saveFiles)
             {
-                //get the cherry option that is selected and set that button's 
-                //value as the value for cherries that will be used in the main world
+                //get the selected save file and use that one's parameters for the world
                 if(selected.checkSelected())
                 {
+                    //if no save file use generic settings
                     if(Storer.getSave(selected.getValue(),0) == -1)
                     {
                         locationX = 65;
@@ -299,10 +314,8 @@ public class TitleScreen extends World
 
     public void started () {
         pokemonPic.scale(200,100);
-        //SoundPlayer.instance.playBackgroundMusic();
     }
 
     public void stopped () {
-        //SoundPlayer.instance.stopBackgroundMusic();
     }
 }

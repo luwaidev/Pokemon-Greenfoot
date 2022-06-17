@@ -8,10 +8,10 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.io.IOException;
 /**
- * Write a description of class Storer here.
+ * This class saves all the information about save files
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Nathan Thian
+ * @version 06.15.22
  */
 public class Storer  
 {
@@ -31,8 +31,10 @@ public class Storer
     private static Scanner all = new Scanner(System.in);
     private static int decision;
 
+    //value that is returned...just initializing
     private static int value;
     //note locations x and y in these arrays go off the grid not actual location
+    //intializes every save file array to be -1 so that it be detected as empty
     private static int[] saveOne = {-1,-1,-1};
     private static int[] saveTwo = {-1,-1,-1};
     private static int[] saveThree = {-1,-1,-1};
@@ -85,21 +87,6 @@ public class Storer
             }
         }
         value = Integer.parseInt(customers[(x-1)*3+y]);
-        /*
-        if(x == 1)
-        {
-        value = saveOne[y];
-        } else if(x == 2)
-        {
-        value = saveTwo[y];
-        } else if(x == 3)
-        {
-        value = saveThree[y];
-        } else if(x == 4)
-        {
-        value = saveFour[y];
-        }
-         */
         return value;
     }
 
@@ -163,20 +150,5 @@ public class Storer
         {
             System.out.println("Error: " + e);
         }
-        /*
-        if(x == 1)
-        {
-        saveOne[y] = z;
-        } else if(x == 2)
-        {
-        saveTwo[y] = z;
-        } else if(x == 3)
-        {
-        saveThree[y] = z;
-        } else if(x == 4)
-        {
-        saveFour[y] = z;
-        }
-         */
     }
 }

@@ -1,7 +1,7 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class Player here.
+ * Player does not really do much. It just sits there while the world performs movements with it.
  * 
  * @author (your name) 
  * @version (a version number or a date)
