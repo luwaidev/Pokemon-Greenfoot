@@ -3,6 +3,11 @@ import java.util.Random;
 /**
  * Game world. In this world the player moves around and can fight pokemon with their own pokemon
  * There are different areas
+ * 
+ * pokemon logo from: https://1000logos.net/pokemon-logo/
+ * pokemon tileset used to make background made by MagiScarf: https://steamcommunity.com/sharedfiles/filedetails/?id=2436216636
+ * grass background for titlescreen from: https://www.google.com/url?sa=i&url=https%3A%2F%2Fdachadecor.ru%2Fgazon%2Fkak-sdelat-gazon-na-dache&psig=AOvVaw2p_U-drpLShCDdwZLsleOU&ust=1656085285916000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCKDU8Mz0w_gCFQAAAAAdAAAAABAL
+ * 
  * @author Nathan Thian (movement grid, world background, movement, setting boundaries, save function, pausing)
  * @version 06.15.2022
  */

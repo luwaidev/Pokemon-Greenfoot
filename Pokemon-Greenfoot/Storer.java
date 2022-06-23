@@ -47,8 +47,12 @@ public class Storer
     {
     }
 
+    /**
+     * This method returns the save information at the specific save number x and the index y
+     */
     public static int getSave(int x, int y)
     {
+        //gets the file name and makes two scanners associated with the file
         try{
             fileName = "waitlist.txt";
             s = new Scanner(new File(fileName));
@@ -58,8 +62,7 @@ public class Storer
             System.out.println("File not found");
             System.exit(1);
         }
-        //counts the number of lines contained in the file and informs 
-        //the user of the total number of guests waiting
+        //gets the number of lines in the text file and makes an array the size of the number of lines
         numLines = 0;
         moreLines = true;
         while(moreLines)
@@ -73,7 +76,7 @@ public class Storer
                 customers = new String[numLines];
             }
         }
-
+        //adds each line of the text file as one string in the array
         numLines = 0;
         addMoreLines = true;
         while(addMoreLines)
@@ -86,12 +89,17 @@ public class Storer
                 addMoreLines = false;
             }
         }
+        //returns the string at the specified index of the array as an integer
         value = Integer.parseInt(customers[(x-1)*3+y]);
         return value;
     }
 
+    /**
+     * This method changes a value in the specified save file x at index y to be z
+     */
     public static void setSave(int x, int y, int z)
     {
+        //gets the file and makes two scanners associated with it
         fileName = "waitlist.txt";
         try{
             s = new Scanner(new File(fileName));
@@ -101,8 +109,7 @@ public class Storer
             System.out.println("File not found");
             System.exit(1);
         }
-        //counts the number of lines contained in the file and informs 
-        //the user of the total number of guests waiting
+        //counts the number of lines in the file and makes an array the size of the number of lines
         numLines = 0;
         moreLines = true;
         int counter = 1;
@@ -118,7 +125,7 @@ public class Storer
                 customers = new String[numLines];
             }
         }
-
+        //adds each line of the file to the array
         numLines = 0;
         addMoreLines = true;
         while(addMoreLines)
@@ -131,11 +138,11 @@ public class Storer
                 addMoreLines = false;
             }
         }
-
-        //asks the user which guest they would like to remove
+        //changes the value at the specified index of the array to be z
         int toBeRemoved = (x-1)*3 + y;
         Integer num = z;
         customers[toBeRemoved] = num.toString();
+        //rewrites the whole text file but with the changed value implemented
         try{
             FileWriter out = new FileWriter(fileName);
             PrintWriter output = new PrintWriter (out);
