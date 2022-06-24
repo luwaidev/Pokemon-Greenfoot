@@ -17,6 +17,9 @@ public class AttackAnimation extends Battle
         
     }
     
+    /**
+     * Uses a timer to animate the attack by changing images
+     */
     public void act()
     {
         a++;

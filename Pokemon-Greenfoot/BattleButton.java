@@ -6,7 +6,8 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * 
  * Hovering methods: Nosson1459
  *      https://www.greenfoot.org/topics/58859/0
- * @author (your name) 
+ *      
+ * @author (Max) 
  * @version (a version number or a date)
  */
 public class BattleButton extends Battle
@@ -20,6 +21,10 @@ public class BattleButton extends Battle
     public BattleButton(String type){
         buttonType = type;
     }
+    
+    /**
+     * Checks over what is being hovered over for visual effects
+     */
     public void act()
     {
         if(mouseHoveringOver(this)){
@@ -43,7 +48,7 @@ public class BattleButton extends Battle
     }
  
     /**
-     * This methods returns true if the mouse is hovering over the specified
+     * This method returns true if the mouse is hovering over the specified
      * button.
      *
      * @param button the button to see if hovering over

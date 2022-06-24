@@ -3,7 +3,7 @@ import java.util.List;
 /**
  * Write a description of class PlayerPokemonHpBar here.
  * 
- * @author (your name) 
+ * @author (Max) 
  * @version (a version number or a date)
  */
 public class PlayerPokemonHpBar extends Battle
@@ -23,6 +23,10 @@ public class PlayerPokemonHpBar extends Battle
         curHealth = curHp;
     }
     
+    /**
+     * Moves the player pokemon hp bar into view when the battle starts and
+     * updates the hp bar
+     */
     public void act()
     {
         if(getY() > 300){

@@ -3,7 +3,7 @@ import java.util.List;
 /**
  * Write a description of class Trainer here.
  * 
- * @author (your name) 
+ * @author (Max) 
  * @version (a version number or a date)
  */
 public class Trainer extends Battle
@@ -21,7 +21,10 @@ public class Trainer extends Battle
         setImage(image);
     }
     
-    
+    /**
+     * Mainly animations for Trainer when he moves out of play and 
+     * calculates when he throws the Pokeball
+     */
     public void act()
     {  
         if(Greenfoot.isKeyDown("Enter")){

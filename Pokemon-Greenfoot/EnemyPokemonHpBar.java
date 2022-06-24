@@ -3,7 +3,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 /**
  * Write a description of class EnemyPokemonHpBar here.
  * 
- * @author (your name) 
+ * @author (Max) 
  * @version (a version number or a date)
  */
 public class EnemyPokemonHpBar extends Battle
@@ -24,6 +24,10 @@ public class EnemyPokemonHpBar extends Battle
         hpBar = new SuperStatBar(maxHealth, curHealth, this, 100, 8, 6, Color.GREEN, Color.LIGHT_GRAY, false, Color.BLACK, 1);
     }
     
+    /**
+     * Animations to move the enemy hp bar when the battle starts and 
+     * updates the hp
+     */
     public void act()
     {
         

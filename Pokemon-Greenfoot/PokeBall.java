@@ -3,7 +3,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 /**
  * Write a description of class PokeBall here.
  * 
- * @author (your name) 
+ * @author (Max) 
  * @version (a version number or a date)
  */
 public class PokeBall extends Battle
@@ -20,6 +20,10 @@ public class PokeBall extends Battle
         
     }
     //x 175, y 350
+    /**
+     * Animation for the pokemon after trainer throws it and adds the explosion 
+     * when it hits the platform
+     */
     public void act()
     {
         a++;

@@ -3,7 +3,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 /**
  * Write a description of class BattleWorld here.
  * 
- * @author (your name) 
+ * @author (Lu-Wai, Max) 
  * @version (a version number or a date)
  */
 public class BattleWorld extends World

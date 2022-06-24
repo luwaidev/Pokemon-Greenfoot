@@ -3,7 +3,7 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 /**
  * Write a description of class PokeBallExplosion here.
  * 
- * @author (your name) 
+ * @author (Max) 
  * @version (a version number or a date)
  */
 public class PokeBallExplosion extends Battle
@@ -19,6 +19,10 @@ public class PokeBallExplosion extends Battle
         setImage(image);
     }
     
+    /**
+     * Animation for explosion and adds the hp bars into the world when animation
+     * is finished
+     */
     public void act()
     {
         a++;
