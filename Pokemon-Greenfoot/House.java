@@ -1,44 +1,44 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class MyWorld here.
+ * Write a description of class House here.
  * 
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class MyWorld extends World
+public class House extends World
 {
-    static int originalX = 0, originalY = 0;
-    static int x, y; 
-    public static final int HIGH = 400, WIDE = 500; //400, 500 //880 1483 - original image size 
+    //background of house 
+    GreenfootImage houseBackground = new GreenfootImage("home.png"); 
     
-    Scroller scroller;
-    Player scrollActor;
+    //objects for scroller
+    Scroller scroller; 
+    Player scrollActor; 
     
+    //X and Y coords set for player 
+    static int originalX= 0, originalY = 0; 
+    static int x,y; 
+    
+    //world constant 
+    public static final int HIGH = 400, WIDE = 500; 
     /**
-     * Constructor for objects of class MyWorld.
+     * Constructor for objects of class House.
      * 
      */
-    public MyWorld(int x, int y)
+    public House()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
-        super(WIDE, HIGH, 1, false);
-        this.x = x;
-        this.y = y;
-        System.out.println(x);
-        System.out.println(y);
-        addPlayer(); 
-    }
-    
-    public void act(){
-        scroll();
+        super(600, 400, 1, false);
+        this.x = x; 
+        this.y = y; 
+        
+        setBackground(houseBackground); 
     }
     
     public void addPlayer(){
-        GreenfootImage background = new GreenfootImage("background.png");
         originalX = x; 
         originalY = y; 
-        scroller = new Scroller(this, background, 1483, 880);
+        scroller = new Scroller(this, houseBackground, 600, 400);
         scrollActor = new Player();
         addObject(scrollActor, x, y);
         Player.originalX = originalX;
@@ -49,8 +49,7 @@ public class MyWorld extends World
         scroll();
     }
     
-    public void scroll()
-    {
+    public void scroll(){
         if(scrollActor != null)
         {
             int dsX = scrollActor.getX() - WIDE / 2;
@@ -58,4 +57,5 @@ public class MyWorld extends World
             scroller.scroll(dsX, dsY);
         }
     }
+    
 }

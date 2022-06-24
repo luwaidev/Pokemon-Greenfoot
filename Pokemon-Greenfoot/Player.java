@@ -1,7 +1,7 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Player does not really do much. It just sits there while the world performs movements with it.
+ * Player does not really do much. It just sits there while the world performs movements with it
  * 
  * @author (your name) 
  * @version (a version number or a date)
@@ -18,29 +18,6 @@ public class Player extends Actor
      */
     public void act()
     {
-        // Add your action code here.
-        //move();
+        
     }
-    
-    /*
-    public void move(){
-        if(Greenfoot.isKeyDown("left")){
-            setRotation(180);
-            move(speed); 
-        }
-        if(Greenfoot.isKeyDown("right")){
-            setRotation(0);
-            move(speed); 
-        }
-        if(Greenfoot.isKeyDown("up")){
-            setRotation(270);
-            move(speed);
-        }
-        if(Greenfoot.isKeyDown("down")){
-            setRotation(90);
-            move(speed);
-        }
-    }
-    */
-    
 }

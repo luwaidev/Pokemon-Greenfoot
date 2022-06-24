@@ -1,46 +1,34 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 /**
- * Write a description of class MyWorld here.
+ * Write a description of class PokemonCenterWorld here.
  * 
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class MyWorld extends World
+public class PokemonCenterWorld extends World
 {
-    static int originalX = 0, originalY = 0;
-    static int x, y; 
-    public static final int HIGH = 400, WIDE = 500; //400, 500 //880 1483 - original image size 
+    static int originalX = 100, originalY = 100; 
+    public static final int HIGH = 256, WIDE = 164; 
     
     Scroller scroller;
-    Player scrollActor;
+    Player scrollActor; 
     
     /**
-     * Constructor for objects of class MyWorld.
+     * Constructor for objects of class PokemonCenterWorld.
      * 
      */
-    public MyWorld(int x, int y)
+    public PokemonCenterWorld()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
-        super(WIDE, HIGH, 1, false);
-        this.x = x;
-        this.y = y;
-        System.out.println(x);
-        System.out.println(y);
+        super(HIGH, WIDE, 1, false); 
         addPlayer(); 
     }
-    
-    public void act(){
-        scroll();
-    }
-    
     public void addPlayer(){
-        GreenfootImage background = new GreenfootImage("background.png");
-        originalX = x; 
-        originalY = y; 
+        GreenfootImage background = new GreenfootImage("pokemoncenter.png");
         scroller = new Scroller(this, background, 1483, 880);
         scrollActor = new Player();
-        addObject(scrollActor, x, y);
+        addObject(scrollActor, originalX, originalY);
         Player.originalX = originalX;
         Player.originalY = originalY;
         Player.worldX = originalX;
@@ -48,7 +36,6 @@ public class MyWorld extends World
         Player.speed = 2;
         scroll();
     }
-    
     public void scroll()
     {
         if(scrollActor != null)

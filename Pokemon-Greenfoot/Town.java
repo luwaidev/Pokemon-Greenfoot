@@ -4,10 +4,6 @@ import java.util.Random;
  * Game world. In this world the player moves around and can fight pokemon with their own pokemon
  * There are different areas
  * 
- * pokemon logo from: https://1000logos.net/pokemon-logo/
- * pokemon tileset used to make background made by MagiScarf: https://steamcommunity.com/sharedfiles/filedetails/?id=2436216636
- * grass background for titlescreen from: https://www.google.com/url?sa=i&url=https%3A%2F%2Fdachadecor.ru%2Fgazon%2Fkak-sdelat-gazon-na-dache&psig=AOvVaw2p_U-drpLShCDdwZLsleOU&ust=1656085285916000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCKDU8Mz0w_gCFQAAAAAdAAAAABAL
- * 
  * @author Nathan Thian (movement grid, world background, movement, setting boundaries, save function, pausing)
  * @version 06.15.2022
  */
@@ -56,7 +52,7 @@ public class Town extends World
     private int total;
     private long seconds;
 
-    //keeps movement in check...increments
+    //timer keeps movement in check...increments
     private int timer = 0;
 
     //boolean that keeps track of whether player is currently moving
@@ -77,26 +73,26 @@ public class Town extends World
     //initialize the movement grid
     private int[][] theMovementGrid;
     /**
-     *  Constructor for objects of class MyWorld. In this method, everything on the world is added and boundaries are set.
-     *  NOTE: the x and y variables here represent the X GRID coordinate and the Y GRID coordinate, NOT the actual coordinates
+     * Constructor for objects of class MyWorld. In this method, everything on the world is added and boundaries are set.
+     * NOTE: the x and y variables here represent the X GRID coordinate and the Y GRID coordinate, NOT the actual coordinates
      * 
      */
     public Town(int x, int y, int health)
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
-        super(WIDE, HIGH, 1, false);
-
-        //sets the pokemon health; player grid x and y to the parameters
+        super(WIDE, HIGH, 1, false); 
+        
+        //sets the pokemon health, player grid x and y to the parameters
         pokemonHealth = health;
         gridPosX = x;
         gridPosY = y;
-
+        
         //sets the position the player will be added to on the background image to the actual location of the player
         //not just the grid position
         //remember that tiles are 10 pixels by 10 pixels
         originalX = gridPosX * 10;
         originalY = gridPosY*10;
-
+        
         //makes grid with dimensions factored into the world
         //should be 140 grids for x and 100 grids for y
         gridX = (int)(1400.00*worldFactor);
@@ -104,6 +100,7 @@ public class Town extends World
 
         //scales the pausebox screen to fit 
         pauseBoxScreen.scale(500,400);
+        
         //this is the movement grid that we are going to use 
         //loop through and make everything a 1 for now
         //where there are objects that cannot be passed, make the value 0
@@ -119,11 +116,11 @@ public class Town extends World
 
         //boundaries for movement are set here
         setBoundaries();
-
+        
         //player and scroller are added here
         addPlayer(); 
     }
-
+    
     /**
      * this method is what sets the boundaries for movement on the grid and also player grid interactions
      */
@@ -179,7 +176,7 @@ public class Town extends World
                 theMovementGrid[i][j] = 0;
             }
         }
-
+        
         //starts to fill in grass with interactions aka 2
         for(int i = 25; i<37; i++)
         {
@@ -223,7 +220,7 @@ public class Town extends World
                 theMovementGrid[i][j] = 2;
             }
         }
-
+        
         //fills in doors with 3, so players can move through with a method
         for(int i = 63; i<68; i++)
         {
@@ -317,14 +314,18 @@ public class Town extends World
     public void addPlayer(){
         //initializes the image that is the background of the world
         GreenfootImage background = new GreenfootImage("map.png");
-        //note everything after this in this method has not been created by us, it was made by 
-        //someone else
+        
+        //note everything after this in this method has not been created by us, it was made by someone else
+        
+        //creates a scroller that encompasses the background image
         scroller = new Scroller(this, background, 1390, 1000);
+        
         //initializes player character
         scrollActor = new Player();
-        //adds the player actor onto the background at the location specified by 
-        //parameters in the world constructor
+        
+        //adds the player actor onto the background at the location specified by parameters in world contructor
         addObject(scrollActor, originalX, originalY);
+        
         //keeps track of variables
         //tbh idk how important these are
         Player.originalX = this.originalX;
@@ -332,8 +333,8 @@ public class Town extends World
         Player.worldX = originalX;
         Player.worldY = originalY;
         Player.speed = 2;
-        //method that allows for scrolling I assume(not really sure what it does 
-        //but it is important
+        
+        //method that allows for scrolling i assume (not really sure what it does but it is important)
         scroll();
     }
 
@@ -359,45 +360,41 @@ public class Town extends World
         //move x is the amount of pixels players move for each movement
         //pixels in x dimension divided by number of grids for x
         double moveX = (1400.00/gridX);
+        
         //move y is the amount of pixels players move for each movement
         //pixels in y dimension divided by number of grids for y
         double moveY = (1000.00/gridY);
-
-        //if not already moving...; helps to prevent diagonal movement 
-        //and makes it seems more like classic pokemon movement; robust
+        
+        //if not already moving...; helps to prevent diagonal movement and makes it seems more like classic pokemon movement; robust
         if(!moving){
             //if right arrow key is pressed...
             if (Greenfoot.isKeyDown("right")){
                 try{
-                    //if the grid you are trying to move to is 3 (a door that leads to somewhere)
-                    if(theMovementGrid[gridPosX+1][gridPosY] == 3)
+                    //if the grid you are trying to move to is 1 (path) or 2 (grass block)...
+                    if(theMovementGrid[gridPosX+1][gridPosY] == 1 || theMovementGrid[gridPosX+1][gridPosY] == 2)
                     {
-                        //put in code to go into new world
-                    }
-                    //if the grid you are trying to move to is a path(1) or
-                    //grass block(2)
-                    else if(theMovementGrid[gridPosX+1][gridPosY] == 1 || theMovementGrid[gridPosX+1][gridPosY] == 2)
-                    {
-
+                        //if the grid you are trying to move to is 3 (a door that leads to somewhere)
+                        if(theMovementGrid[gridPosX+1][gridPosY] == 3)
+                        {
+                            //put in code to go into new world
+                        }
                         //sets the currently moving to true
                         moving = true;
-                        //turns the player so it faces right and moves it the appropriate amount
-                        //horizontally
+                        //turns the player so it faces right and moves it the appropriate amount horizontally
                         scrollActor.setRotation(0);
                         scrollActor.move((int)moveX);
-                        //sets curently moving ot false
+                        //sets currently moving to false
                         moving = false;
                         //updates the current x grid position accordingly
                         gridPosX++;
-                        //if this is a grass block(2) then randomly decide whether a battle should
-                        //take place
+                        //if this is a grass block (2) then randomly decide whether a battle should take place
                         if(theMovementGrid[gridPosX][gridPosY] == 2)
                         {
+                            //random here
                             boolean fight = random.nextBoolean();
                             if(fight)
                             {
                                 //put in code to go into battle mode
-                                enterBattle();
                             }
                         }
                     }
@@ -406,26 +403,32 @@ public class Town extends World
 
                 }
             } else if (Greenfoot.isKeyDown("left")){
-                //same code basically as right
+                //if left arrow key is pressed...
                 try{
-                    if(theMovementGrid[gridPosX-1][gridPosY] == 3)
+                    //if the grid you are trying to move to is 1 (path) or 2 (grass block)...
+                    if(theMovementGrid[gridPosX-1][gridPosY] == 1 || theMovementGrid[gridPosX-1][gridPosY] == 2)
                     {
-                        //put in code to go into new world
-                    }
-                    else if(theMovementGrid[gridPosX-1][gridPosY] == 1 || theMovementGrid[gridPosX-1][gridPosY] == 2)
-                    {
+                        //if the grid you are trying to move to is 3 (a door that leads to somewhere)
+                        if(theMovementGrid[gridPosX-1][gridPosY] == 3)
+                        {
+                            //put in code to go into new world
+                        }
+                        //sets the currently moving to true
                         moving = true;
+                        //turns the player so it faces left and moves it the appropriate amount horizontally
                         scrollActor.setRotation(180);
                         scrollActor.move((int)moveX);
+                        //sets currently moving to false
                         moving = false;
+                        //updates the current x grid position accordingly
                         gridPosX--;
+                        //if this is a grass block (2) then randomly decide whether a battle should take place
                         if(theMovementGrid[gridPosX][gridPosY] == 2)
                         {
                             boolean fight = random.nextBoolean();
                             if(fight)
                             {
                                 //put in code to go into battle mode
-                                enterBattle();
                             }
                         }
                     }
@@ -434,27 +437,32 @@ public class Town extends World
 
                 }
             } else if (Greenfoot.isKeyDown("up")){
-                //same code basically as right
+                //if the up arrow key is pressed...
                 try{
-                    if(theMovementGrid[gridPosX][gridPosY-1] == 3)
+                    //if the grid you are trying to move to is 1 (path) or 2 (grass block)...
+                    if(theMovementGrid[gridPosX][gridPosY-1] == 1 || theMovementGrid[gridPosX][gridPosY-1] == 2)
                     {
-                        //put in code to go into new world
-                        System.out.println("move");
-                    }
-                    else if(theMovementGrid[gridPosX][gridPosY-1] == 1 || theMovementGrid[gridPosX][gridPosY-1] == 2)
-                    {
+                        //if the grid you are trying to move to is 3 (a door that leads to somewhere)
+                        if(theMovementGrid[gridPosX][gridPosY-1] == 3)
+                        {
+                            //put in code to go into new world
+                        }
+                        //sets the currently moving to true
                         moving = true;
+                        //turns the player so it faces up and moves it the appropriate amount vertically
                         scrollActor.setRotation(270);
                         scrollActor.move((int)moveY);
+                        //sets currently moving to false
                         moving = false;
+                        //updates the current y grid position accordingly
                         gridPosY--;
+                        //if this is a grass block (2) then randomly decide whether a battle should take place
                         if(theMovementGrid[gridPosX][gridPosY] == 2)
                         {
                             boolean fight = random.nextBoolean();
                             if(fight)
                             {
                                 //put in code to go into battle mode
-                                enterBattle();
                             }
                         }
                     }
@@ -463,26 +471,32 @@ public class Town extends World
 
                 }
             } else if (Greenfoot.isKeyDown("down")) {
-                //same code basically as right
+                //if the down arrow key is pressed...
                 try{
-                    if(theMovementGrid[gridPosX][gridPosY+1] == 3)
+                    //if the grid you are trying to move to is 1 (path) or 2 (grass block)...
+                    if(theMovementGrid[gridPosX][gridPosY+1] == 1 || theMovementGrid[gridPosX][gridPosY+1] == 2)
                     {
-                        //put in code to go into new world
-                    }
-                    else if(theMovementGrid[gridPosX][gridPosY+1] == 1 || theMovementGrid[gridPosX][gridPosY+1] == 2)
-                    {
+                        //if the grid you are trying to move to is 3 (a door that leads to somewhere)
+                        if(theMovementGrid[gridPosX][gridPosY+1] == 3)
+                        {
+                            //put in code to go into new world
+                        }
+                        //sets the currently moving to true
                         moving = true;
+                        //turns the player so it faces down and moves it the appropriate amount vertically
                         scrollActor.setRotation(90);
                         scrollActor.move((int)moveY);
+                        //sets currently moving to false
                         moving = false;
+                        //updates the current y grid position accordingly
                         gridPosY++;
+                        //if this is a grass block (2) then randomly decide whether a battle should take place
                         if(theMovementGrid[gridPosX][gridPosY] == 2)
                         {
                             boolean fight = random.nextBoolean();
                             if(fight)
                             {
                                 //put in code to go into battle mode
-                                enterBattle();
                             }
                         }
                     }
@@ -494,78 +508,92 @@ public class Town extends World
         }
     }
 
-    public void enterBattle(){
-
-        Greenfoot.setWorld(new BattleWorld());
-    }
-
+    /**
+     * This method will place up the pause screen onto the screen when the game is paused
+     */
     public void pauseScreen()
     {
+        //if there is not already a pause rectangle on the screen...
         if (rectCheck==0){
+            //initializes a pause box rectangle the size of the world
             pauseBox = new Rectangle(this.getWidth(),this.getHeight(),255);
+            //sets the image of the pause box to the actual pause screen
             pauseBox.setImage(pauseBoxScreen);
+            //add the pause box in the middle of the world
             addObject(pauseBox, getWidth()/2, getHeight()/2);
+            //keeps track that there is a pause box already on screen; prevents duplicates
             rectCheck = 1;
         }
     }
 
+    /**
+     * This method will perform functions that are possible while the game is paused
+     */
     public void checkPause()
     {
-        //if 1 pressed, save to save file 1...same for 1-4 buttons
+        //if 1 is pressed, the first save file is updated with this current game's information
         if(Greenfoot.isKeyDown("1"))
         {
+            //see storer for specifics
             Storer.setSave(1,0,gridPosX);
             Storer.setSave(1,1,gridPosY);
             Storer.setSave(1,2,pokemonHealth);
         } else if(Greenfoot.isKeyDown("2"))
         {
+            //see storer for specifics
             Storer.setSave(2,0,gridPosX);
             Storer.setSave(2,1,gridPosY);
             Storer.setSave(2,2,pokemonHealth);
         } else if(Greenfoot.isKeyDown("3"))
         {
+            //see storer for specifics
             Storer.setSave(3,0,gridPosX);
             Storer.setSave(3,1,gridPosY);
             Storer.setSave(3,2,pokemonHealth);
         } else if(Greenfoot.isKeyDown("4"))
         {
+            //see storer for specifics
             Storer.setSave(4,0,gridPosX);
             Storer.setSave(4,1,gridPosY);
             Storer.setSave(4,2,pokemonHealth);
-        } else if(Greenfoot.isKeyDown("5"))
+        } else if(Greenfoot.isKeyDown("shift"))
         {
-            //if 5-8 pressed, erase the save files specified in the pausescreen
-            Storer.setSave(1,0,-1);
-            Storer.setSave(1,1,-1);
-            Storer.setSave(1,2,-1);
-        }else if(Greenfoot.isKeyDown("6"))
-        {
-            Storer.setSave(2,0,-1);
-            Storer.setSave(2,1,-1);
-            Storer.setSave(2,2,-1);
-        }else if(Greenfoot.isKeyDown("7"))
-        {
-            Storer.setSave(3,0,-1);
-            Storer.setSave(3,1,-1);
-            Storer.setSave(3,2,-1);
-        }else if(Greenfoot.isKeyDown("8"))
-        {
-            Storer.setSave(4,0,-1);
-            Storer.setSave(4,1,-1);
-            Storer.setSave(4,2,-1);
-        }else if(Greenfoot.isKeyDown("shift"))
-        {
-            //shift to exit pausescreen
+            //if shift is pressed, the pause box is removed and the game is set to unpaused
             removeObject(pauseBox);
             rectCheck = 0;
             paused = false;
         } else if(Greenfoot.isKeyDown("m"))
         {
-            //press m to go back to title screen
+            //if m is pressed, the pause box is removed and the world goes back to title screen
+            //used to switch between save files and also to test
             removeObject(pauseBox);
             rectCheck = 0;
             TitleScreen title = new TitleScreen();
             Greenfoot.setWorld(title);
+        } else if(Greenfoot.isKeyDown("5"))
+        {
+            //overwrites information on first save file
+            Storer.setSave(1,0,-1);
+            Storer.setSave(1,1,-1);
+            Storer.setSave(1,2,-1);
+        } else if(Greenfoot.isKeyDown("6"))
+        {
+            //overwrites information on second save file
+            Storer.setSave(2,0,-1);
+            Storer.setSave(2,1,-1);
+            Storer.setSave(2,2,-1);
+        } else if(Greenfoot.isKeyDown("7"))
+        {
+            //overwrites information on third save file
+            Storer.setSave(3,0,-1);
+            Storer.setSave(3,1,-1);
+            Storer.setSave(3,2,-1);
+        } else if(Greenfoot.isKeyDown("8"))
+        {
+            //overwrites information on fourth save file
+            Storer.setSave(4,0,-1);
+            Storer.setSave(4,1,-1);
+            Storer.setSave(4,2,-1);
         }
     }
 
@@ -584,7 +612,7 @@ public class Town extends World
             {
                 paused = true;
             }
-            //without this timer the player moves way too fast
+            //without this timer, the player moves way too fast
             //allows movement every 3 acts
             if(timer >= 3)
             {
@@ -599,7 +627,6 @@ public class Town extends World
             scroll();
         } else
         {
-            //if the game is paused
             //puts up pause screen
             pauseScreen();
             //checks pause methods
