@@ -14,8 +14,8 @@ public class EnemyPokemonHpBar extends Battle
      */
     GreenfootImage image = new GreenfootImage("images/BattleImages/HPEnemy.png");
     boolean addedHpBar = false;
-    int maxHealth; 
-    int curHealth;
+    public int maxHealth; 
+    public int curHealth;
     SuperStatBar hpBar;
     public EnemyPokemonHpBar(int maxHp, int curHp){
         setImage(image);

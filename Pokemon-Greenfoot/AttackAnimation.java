@@ -70,8 +70,7 @@ public class AttackAnimation extends Battle
         if(a==115){
             List<SuperTextBox> textboxes = getWorld().getObjects(SuperTextBox.class);
             getWorld().removeObjects(textboxes);
-            ((BattleWorld) getWorld()).mainMenu();
-            ((BattleWorld)getWorld()).attacking = false;
+            ((BattleWorld) getWorld()).enemyAttack();
             getWorld().removeObject(this);
         }
     }

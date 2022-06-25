@@ -32,6 +32,9 @@ public class BattleWorld extends World
     SuperTextBox sendPokemonText;
     SuperDisplayLabel pPokemonSpeciesLabel;
     SuperDisplayLabel ePokemonSpeciesLabel;
+    
+    int x = 0;
+    int y = 0;
     /**
      * Constructor for objects of class BattleWorld.
      * 
@@ -62,10 +65,70 @@ public class BattleWorld extends World
         ePokemon.moveDmg[0] = 1;
         ePokemon.pokemonSpecies = "Pidgey";
         
-        pPokemon = new Pokemon();
+        pPokemon = new Pokemon(); // Turtwig base
         pPokemon.staticImg = new GreenfootImage("images/BattleImages/TurtwigBack/0.png");
         pPokemon.maxHealth = 20;
         pPokemon.health = 20;
+        pPokemon.moves = new String[2];
+        pPokemon.moves[0] = "RazorLeaf";
+        pPokemon.moves[1] = "Tackle";
+        pPokemon.moveDmg = new int[2];
+        pPokemon.moveDmg[0] = 2;
+        pPokemon.moveDmg[1] = 1;
+        pPokemon.pokemonSpecies = "Turtwig";
+        
+        // Scale image smaller
+        e = new EnemyPokemon();
+        //GreenfootImage image = new GreenfootImage(t.staticImg.toString());
+        //image.mirrorHorizontally();
+        //image.scale(image.getWidth()/3*2, image.getHeight()/3*2); 
+        e.setImage(ePokemon.staticImg); 
+        addObject(e,460,120);
+        
+        // Init attackButtons
+        attackButtons = new BattleButton[0];
+        
+        startText = new SuperTextBox("A Wild "+ePokemon.pokemonSpecies+" has appeared!", new Font(false, false, 16), 250);
+        sendPokemonText = new SuperTextBox("Go, Turtwig", new Font(false, false, 16), 100);
+        
+        addObject(startText, 250, 450);
+    }
+    
+    public BattleWorld(int _x,  int _y, int health)
+    { 
+        // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
+        super(600, 500, 1); 
+        setBackground("images/BattleImages/routeBackground.jpeg");
+        
+        x = _x;
+        y = _y;
+        
+        
+        addObject(new TextBar(), 300, 450);
+        addObject(new PlayerPlatform(), 200, 370);
+        addObject(new EnemyPlatform(), 450, 200);
+        addObject(new Trainer(), 300, 252);
+        
+        // Generate player and enemy pokemon data as turtwig
+        
+        ePokemon= new Pokemon(); // Pidgey base
+        ePokemon.staticImg = new GreenfootImage("images/BattleImages/PidgeyFront/0.png");
+        ePokemon.maxHealth = 15;
+        ePokemon.health = 15;
+        ePokemon.moves = new String[1];
+        ePokemon.moves[0] = "Gust";
+        ePokemon.moveDmg = new int[1];
+        ePokemon.moveDmg[0] = 1;
+        ePokemon.pokemonSpecies = "Pidgey";
+        
+        
+        pPokemon = new Pokemon(); // Turtwig base
+        pPokemon.staticImg = new GreenfootImage("images/BattleImages/TurtwigBack/0.png");
+        pPokemon.maxHealth = 20;
+        if (health == 0){
+            health = 20;
+        }
+        pPokemon.health = health;
         pPokemon.moves = new String[2];
         pPokemon.moves[0] = "RazorLeaf";
         pPokemon.moves[1] = "Tackle";
@@ -184,26 +247,68 @@ public class BattleWorld extends World
         
     }
     
+    int attackCounter = 0;
     public void attack(int attack){
         ePokemon.health -= pPokemon.moveDmg[attack];
         enemyHP.curHealth = ePokemon.health;
-        // Enemy AI
-        pPokemon.health -= ePokemon.moveDmg[attack];
-        enemyHP.hpBar.update(pPokemon.health);
+        enemyHP.hpBar.update(ePokemon.health);
         
         for (int  i =0 ; i < attackButtons.length;i++){
             removeObject(attackButtons[i]);
         }
         attacking = true;
-        SuperTextBox attackText = new SuperTextBox("Your "+ pPokemon.pokemonSpecies + " used " +  pPokemon.moves[0], new Font(false, false, 16), 250);
+        SuperTextBox attackText = new SuperTextBox("Your "+ pPokemon.pokemonSpecies + " used " +  pPokemon.moves[attack], new Font(false, false, 16), 250);
         addObject(attackText, 250, 450);
         addObject(new AttackAnimation(), 300, 300);
-        System.out.println(ePokemon.health);
-    }
-    
-    public void enemyAttack(int attack){
+        
         
     }
+    
+    public void enemyAttack(){
+        
+        // Enemy AI
+        pPokemon.health -= ePokemon.moveDmg[0];
+        playerHP.curHealth = pPokemon.health;
+        playerHP.hpBar.update(pPokemon.health);
+        
+        SuperTextBox attackText = new SuperTextBox("The "+ ePokemon.pokemonSpecies + " used " +  ePokemon.moves[0], new Font(false, false, 16), 250);
+        addObject(attackText, 250, 450);
+        addObject(new AttackAnimation(), 75, 500);
+        attackCounter++;
+        
+        if (attackCounter != 0){
+            attackCounter = 0;
+            mainMenu();
+            if (pPokemon.health == 0){
+                new EndBattle();
+                SuperTextBox endText = new SuperTextBox("Your "+ pPokemon.pokemonSpecies + " fainted" , new Font(false, false, 16), 250);
+                addObject(endText, 250, 450);
+            }   else if (ePokemon.health == 0){
+                new EndBattle();
+                SuperTextBox endText = new SuperTextBox("The "+ ePokemon.pokemonSpecies + " fainted" , new Font(false, false, 16), 250);
+                addObject(endText, 250, 450);
+            }
+            return;
+        }
+        
+        
+    }
+    
+    public void returnToWorkld(){
+        //initialize the world with save file/generic code's information
+        
+        Town world = new Town(x,y,pPokemon.health);
+        //move to the new world
+        Greenfoot.setWorld(world);
+    }
+    
+    public void returnToMenu(){
+        //initialize the world with save file/generic code's information
+        TitleScreen world = new TitleScreen();
+        //move to the new world
+        Greenfoot.setWorld(world);
+    }
+    
     
     
 }
