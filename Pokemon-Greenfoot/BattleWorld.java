@@ -153,13 +153,15 @@ public class BattleWorld extends World
         
         addObject(startText, 250, 450);
     }
-    
+     
+    // Add player pokemon sprite to the world
     public void addPlayerPokemon(){
         p = new PlayerPokemon();
         p.setImage(pPokemon.staticImg);
         addObject(p, 200,300);
     }
     
+     // Remove old menu items, place main menu items
     public void mainMenu(){
         pPokemonSpeciesLabel = new SuperDisplayLabel(80, new Font(false, false, 16));
         addObject(pPokemonSpeciesLabel, 430, 275);
@@ -186,6 +188,7 @@ public class BattleWorld extends World
             menuType = false;
     }
     
+    // Remove old menu items, place fight menu items in
     public void fightMenu(){
         
         System.out.println("fight");
@@ -210,6 +213,7 @@ public class BattleWorld extends World
         menuType = true;
     }
     
+    // spawn player and enemy hp bars
     public void spawnHpBar(){
         playerHP =  new PlayerPokemonHpBar(pPokemon.maxHealth, pPokemon.health);
         enemyHP = new EnemyPokemonHpBar(ePokemon.maxHealth, ePokemon.health);
@@ -218,12 +222,13 @@ public class BattleWorld extends World
     }
     
     public void act(){
+        // Check for buttons
         if(Greenfoot.mouseClicked(null) && !attacking){
             if (fightButton != null && fightButton.mouseHoveringOver() && !menuType){
                 fightMenu();
-            }
+            } // really wanted to add bag but got too busy and didn't have time
             
-            for (int i = 0; i < attackButtons.length; i++){
+            for (int i = 0; i < attackButtons.length; i++){ // different attack buttons
                 if (attackButtons[i] != null && attackButtons[i].mouseHoveringOver() && menuType){
                     attack(i);
                 }
@@ -231,32 +236,39 @@ public class BattleWorld extends World
             
         }
         
+        // Main menu
         if (!attacking && Greenfoot.isKeyDown("escape") && menuType){
             mainMenu();
         }
         
         /*THIS IS FOR THE HP BAR TO WORK DONT TOUCH THIS
          *  BEING USED FOR REFERENCE WHEN ATTACKS HAPPEN 
-         */
+         
         if(Greenfoot.isKeyDown("a")){
             System.out.println(enemyHP.curHealth);
             enemyHP.curHealth--;
             ePokemon.health--;
             enemyHP.hpBar.update(ePokemon.health);
         }
+        */
         
     }
     
+    // When attack button is pushed
     int attackCounter = 0;
     public void attack(int attack){
+        // Do damage to enemy
         ePokemon.health -= pPokemon.moveDmg[attack];
         enemyHP.curHealth = ePokemon.health;
         enemyHP.hpBar.update(ePokemon.health);
         
+        // Hide attack buttons
         for (int  i =0 ; i < attackButtons.length;i++){
             removeObject(attackButtons[i]);
         }
         attacking = true;
+        
+        // Attack prompt and animation
         SuperTextBox attackText = new SuperTextBox("Your "+ pPokemon.pokemonSpecies + " used " +  pPokemon.moves[attack], new Font(false, false, 16), 250);
         addObject(attackText, 250, 450);
         addObject(new AttackAnimation(), 300, 300);
@@ -264,11 +276,13 @@ public class BattleWorld extends World
         
     }
     
+    // For the enemy to attack
     public void enemyAttack(){
         
-        
+        // called after attack, should probably be in just a different function but i'm dumb like that
         if (attackCounter >= 1){
             
+            // If enemy or player health <=0, play prompt, wait for animation, and then return to menu or world as needed
             if (attackCounter >= 2 && pPokemon.health<=0){
                 returnToMenu();
             }   else if (attackCounter >= 2 && ePokemon.health <=0){
@@ -293,11 +307,12 @@ public class BattleWorld extends World
             return;
         }
         
-        // Enemy AI
+        // Enemy AI (and by ai i mean it just uses the first move)
         pPokemon.health -= ePokemon.moveDmg[0];
         playerHP.curHealth = pPokemon.health;
         playerHP.hpBar.update(pPokemon.health);
         
+        // attack prompt and animation
         SuperTextBox attackText = new SuperTextBox("The "+ ePokemon.pokemonSpecies + " used " +  ePokemon.moves[0], new Font(false, false, 16), 250);
         addObject(attackText, 250, 450);
         addObject(new AttackAnimation(), 75, 500);
