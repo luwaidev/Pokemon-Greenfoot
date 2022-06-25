@@ -1,8 +1,12 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.util.Random;
 /**
- * Game world. In this world the player moves around and can fight pokemon with their own pokemon
- * There are different areas
+ * This is the game world where the player moves and fights. Upon titlescreen selection you are placed in front of a home and are allowed to walk around. 
+ * All the obstacles in the world besides the grass do not allow the player to move through them. If you walk on a grass block, you are placed into a pokemon battle.
+ * This world uses a 2d array in order to move. This grid keeps track of where the player is. When you move, the grid checks where you are trying to move on the grid 
+ * and if you are not allowed to move,nothing happens, but if you are allowed to move, the player moves and the grid keeps track of its location. There are several doors
+ * in the world which were intended to allow the player to move into different buildings and areas, but we did not have time to implement those. These are locations on
+ * the grid with an integer value 3. 
  * 
  * pokemon logo from: https://1000logos.net/pokemon-logo/
  * pokemon tileset used to make background made by MagiScarf: https://steamcommunity.com/sharedfiles/filedetails/?id=2436216636
