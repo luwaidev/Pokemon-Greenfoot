@@ -439,7 +439,6 @@ public class Town extends World
                     if(theMovementGrid[gridPosX][gridPosY-1] == 3)
                     {
                         //put in code to go into new world
-                        System.out.println("move");
                     }
                     else if(theMovementGrid[gridPosX][gridPosY-1] == 1 || theMovementGrid[gridPosX][gridPosY-1] == 2)
                     {

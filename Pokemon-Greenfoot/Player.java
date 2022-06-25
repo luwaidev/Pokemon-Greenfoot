@@ -18,9 +18,10 @@ public class Player extends Actor
      */
     public void act()
     {
-        movePlayer(); 
+        //movePlayer(); 
     }
     
+    /*
     public void movePlayer(){
         
         if(Greenfoot.isKeyDown("right")){
@@ -41,12 +42,13 @@ public class Player extends Actor
         }
         /*if(Player.class != null){
             System.out.println("bruh"); 
-        }*/
+        }
         if(isTouching(Door.class)){
             System.out.println("Touched door"); 
             Greenfoot.setWorld(new Town(300, 200, 1)); 
         }
-        
+    
     }
+    */
     
 }
