@@ -372,6 +372,8 @@ public class Town extends World
                     //if the grid you are trying to move to is 3 (a door that leads to somewhere)
                     if(theMovementGrid[gridPosX+1][gridPosY] == 3)
                     {
+                        
+                    
                         //put in code to go into new world
                     }
                     //if the grid you are trying to move to is a path(1) or
@@ -438,6 +440,7 @@ public class Town extends World
                 try{
                     if(theMovementGrid[gridPosX][gridPosY-1] == 3)
                     {
+                        Greenfoot.setWorld(new House(gridPosX, gridPosY, pokemonHealth));
                         //put in code to go into new world
                     }
                     else if(theMovementGrid[gridPosX][gridPosY-1] == 1 || theMovementGrid[gridPosX][gridPosY-1] == 2)
@@ -495,7 +498,7 @@ public class Town extends World
 
     public void enterBattle(){
 
-        Greenfoot.setWorld(new BattleWorld());
+        Greenfoot.setWorld(new BattleWorld(gridPosX, gridPosY, pokemonHealth));
     }
 
     public void pauseScreen()

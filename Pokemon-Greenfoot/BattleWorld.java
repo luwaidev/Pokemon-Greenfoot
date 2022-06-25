@@ -307,7 +307,7 @@ public class BattleWorld extends World
     
     public void returnToWorld(){
         //initialize the world with save file/generic code's information
-        
+        System.out.println(x+","+y);
         Town world = new Town(x,y,pPokemon.health);
         //move to the new world
         Greenfoot.setWorld(world);
