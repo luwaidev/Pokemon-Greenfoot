@@ -394,6 +394,7 @@ public class Town extends World
                             boolean fight = random.nextBoolean();
                             if(fight)
                             {
+                                enterBattle();
                                 //put in code to go into battle mode
                             }
                         }
@@ -428,6 +429,7 @@ public class Town extends World
                             boolean fight = random.nextBoolean();
                             if(fight)
                             {
+                                enterBattle();
                                 //put in code to go into battle mode
                             }
                         }
@@ -441,8 +443,7 @@ public class Town extends World
                 try{
                     //if the grid you are trying to move to is 1 (path) or 2 (grass block)...
                     if(theMovementGrid[gridPosX][gridPosY-1] == 1 || theMovementGrid[gridPosX][gridPosY-1] == 2)
-                    { 
-                        enterHouse(); 
+                    {
                         //if the grid you are trying to move to is 3 (a door that leads to somewhere)
                         if(theMovementGrid[gridPosX][gridPosY-1] == 3)
                         {
@@ -465,6 +466,7 @@ public class Town extends World
                             boolean fight = random.nextBoolean();
                             if(fight)
                             {
+                                enterBattle();
                                 //put in code to go into battle mode
                             }
                         }
@@ -499,6 +501,7 @@ public class Town extends World
                             boolean fight = random.nextBoolean();
                             if(fight)
                             {
+                                enterBattle();
                                 //put in code to go into battle mode
                             }
                         }
@@ -601,7 +604,11 @@ public class Town extends World
     }
     
     public void enterHouse(){
-        Greenfoot.setWorld(new House()); 
+        Greenfoot.setWorld(new House(gridPosX, gridPosY, pokemonHealth)); 
+    }
+    
+    public void enterBattle(){
+        Greenfoot.setWorld(new BattleWorld(gridPosX, gridPosY, pokemonHealth)); 
     }
 
     /**
