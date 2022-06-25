@@ -395,6 +395,7 @@ public class Town extends World
                             boolean fight = random.nextBoolean();
                             if(fight)
                             {
+                                enterBattle();
                                 //put in code to go into battle mode
                             }
                         }
@@ -429,6 +430,7 @@ public class Town extends World
                             boolean fight = random.nextBoolean();
                             if(fight)
                             {
+                                enterBattle();
                                 //put in code to go into battle mode
                             }
                         }
@@ -464,6 +466,7 @@ public class Town extends World
                             boolean fight = random.nextBoolean();
                             if(fight)
                             {
+                                enterBattle();
                                 //put in code to go into battle mode
                             }
                         }
@@ -498,6 +501,7 @@ public class Town extends World
                             boolean fight = random.nextBoolean();
                             if(fight)
                             {
+                                enterBattle();
                                 //put in code to go into battle mode
                             }
                         }
@@ -598,7 +602,11 @@ public class Town extends World
             Storer.setSave(4,2,-1);
         }
     }
-
+    
+    public void enterBattle(){
+        BattleWorld world = new BattleWorld(gridPosX, gridPosY, pokemonHealth);
+        Greenfoot.setWorld(world);
+    }
     /**
      * Act method keeps track of all the methods that go on real time
      * movement, pausing, scrolling etc.

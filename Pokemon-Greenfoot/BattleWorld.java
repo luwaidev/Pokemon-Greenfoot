@@ -266,6 +266,33 @@ public class BattleWorld extends World
     
     public void enemyAttack(){
         
+        
+        if (attackCounter >= 1){
+            
+            if (attackCounter >= 2 && pPokemon.health<=0){
+                returnToMenu();
+            }   else if (attackCounter >= 2 && ePokemon.health <=0){
+                returnToWorld();
+            }
+            if (pPokemon.health <= 0){
+                SuperTextBox endText = new SuperTextBox("Your "+ pPokemon.pokemonSpecies + " fainted" , new Font(false, false, 16), 250);
+                addObject(endText, 250, 450);
+                addObject(new EndBattle(), 800, 800);
+                attackCounter++;
+            }   else if (ePokemon.health <= 0){
+                SuperTextBox endText = new SuperTextBox("The "+ ePokemon.pokemonSpecies + " fainted" , new Font(false, false, 16), 250);
+                addObject(endText, 250, 450);
+                
+                addObject(new EndBattle(), 800, 800);
+                attackCounter++;
+            }   else {
+                attackCounter = 0;
+                mainMenu();
+                attacking = false;
+            }
+            return;
+        }
+        
         // Enemy AI
         pPokemon.health -= ePokemon.moveDmg[0];
         playerHP.curHealth = pPokemon.health;
@@ -276,25 +303,9 @@ public class BattleWorld extends World
         addObject(new AttackAnimation(), 75, 500);
         attackCounter++;
         
-        if (attackCounter != 0){
-            attackCounter = 0;
-            mainMenu();
-            if (pPokemon.health == 0){
-                new EndBattle();
-                SuperTextBox endText = new SuperTextBox("Your "+ pPokemon.pokemonSpecies + " fainted" , new Font(false, false, 16), 250);
-                addObject(endText, 250, 450);
-            }   else if (ePokemon.health == 0){
-                new EndBattle();
-                SuperTextBox endText = new SuperTextBox("The "+ ePokemon.pokemonSpecies + " fainted" , new Font(false, false, 16), 250);
-                addObject(endText, 250, 450);
-            }
-            return;
-        }
-        
-        
     }
     
-    public void returnToWorkld(){
+    public void returnToWorld(){
         //initialize the world with save file/generic code's information
         
         Town world = new Town(x,y,pPokemon.health);

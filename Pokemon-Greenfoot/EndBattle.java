@@ -23,10 +23,11 @@ public class EndBattle extends Battle
      */
     public void act()
     {
-        a++;
+            a++;
         
         if(a>=160){
             List<SuperTextBox> textboxes = getWorld().getObjects(SuperTextBox.class);
+            getWorld().removeObject(textboxes.get(textboxes.size()-1));
             ((BattleWorld) getWorld()).enemyAttack();
             getWorld().removeObject(this);
         }
