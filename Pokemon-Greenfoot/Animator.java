@@ -4,8 +4,8 @@ import greenfoot.*; // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  * Animation system integrating Mr. Cohens Animation and AnimationManager
  * classes
  * 
- * @author (Lu-Wai)
- * @version (a version number or a date)
+ * @author Lu-Wai and Ethan
+ * @version June 24, 2022
  */
 public class Animator extends SuperSmoothMover
 {

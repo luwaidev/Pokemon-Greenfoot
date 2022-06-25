@@ -1,5 +1,6 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.util.Random;
+
 /**
  * This is the game world where the player moves and fights. Upon titlescreen selection you are placed in front of a home and are allowed to walk around. 
  * All the obstacles in the world besides the grass do not allow the player to move through them. If you walk on a grass block, you are placed into a pokemon battle.
@@ -7,6 +8,8 @@ import java.util.Random;
  * and if you are not allowed to move,nothing happens, but if you are allowed to move, the player moves and the grid keeps track of its location. There are several doors
  * in the world which were intended to allow the player to move into different buildings and areas, but we did not have time to implement those. These are locations on
  * the grid with an integer value 3. 
+ * 
+ * known bug: when inside a section of grass and you get into a fight you cannot get out, did not have time to fix
  * 
  * pokemon logo from: https://1000logos.net/pokemon-logo/
  * pokemon tileset used to make background made by MagiScarf: https://steamcommunity.com/sharedfiles/filedetails/?id=2436216636
@@ -391,6 +394,7 @@ public class Town extends World
                         //horizontally
                         scrollActor.setRotation(0);
                         scrollActor.move((int)moveX);
+                        scrollActor.walkRight();
                         //sets curently moving ot false
                         moving = false;
                         //updates the current x grid position accordingly
@@ -409,7 +413,7 @@ public class Town extends World
                     }
                 } catch (ArrayIndexOutOfBoundsException e)
                 {
-
+                    
                 }
             } else if (Greenfoot.isKeyDown("left")){
                 //same code basically as right
@@ -423,6 +427,7 @@ public class Town extends World
                         moving = true;
                         scrollActor.setRotation(180);
                         scrollActor.move((int)moveX);
+                        scrollActor.walkLeft();
                         moving = false;
                         gridPosX--;
                         if(theMovementGrid[gridPosX][gridPosY] == 2)
@@ -452,6 +457,7 @@ public class Town extends World
                         moving = true;
                         scrollActor.setRotation(270);
                         scrollActor.move((int)moveY);
+                        scrollActor.walkUp();
                         moving = false;
                         gridPosY--;
                         if(theMovementGrid[gridPosX][gridPosY] == 2)
@@ -460,6 +466,7 @@ public class Town extends World
                             if(fight)
                             {
                                 //put in code to go into battle mode
+                                
                                 enterBattle();
                             }
                         }
@@ -480,6 +487,7 @@ public class Town extends World
                         moving = true;
                         scrollActor.setRotation(90);
                         scrollActor.move((int)moveY);
+                        scrollActor.walkDown();
                         moving = false;
                         gridPosY++;
                         if(theMovementGrid[gridPosX][gridPosY] == 2)
@@ -494,9 +502,13 @@ public class Town extends World
                     }
                 } catch (ArrayIndexOutOfBoundsException e)
                 {
-
+                    
                 }
+            } else {
+                scrollActor.setIdle();
+
             }
+            scrollActor.setRotation(0);
         }
     }
 

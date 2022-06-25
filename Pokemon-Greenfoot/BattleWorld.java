@@ -1,5 +1,6 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
+
 /**
  * Write a description of class BattleWorld here.
  * 
@@ -10,6 +11,8 @@ public class BattleWorld extends World
 {
     public boolean playerTurn;
     private int time;    
+    
+    SoundPlayer soundplayer = new SoundPlayer();
     
     private Pokemon[] enemies;
     private Pokemon pPokemon;
@@ -156,6 +159,7 @@ public class BattleWorld extends World
      
     // Add player pokemon sprite to the world
     public void addPlayerPokemon(){
+        soundplayer.playWildPokemonBattle();
         p = new PlayerPokemon();
         p.setImage(pPokemon.staticImg);
         addObject(p, 200,300);
@@ -227,6 +231,10 @@ public class BattleWorld extends World
             if (fightButton != null && fightButton.mouseHoveringOver() && !menuType){
                 fightMenu();
             } // really wanted to add bag but got too busy and didn't have time
+            else if(runButton!=null && runButton.mouseHoveringOver() && !menuType){
+                soundplayer.stopWildPokemonBattle();
+                returnToWorld();
+            }
             
             for (int i = 0; i < attackButtons.length; i++){ // different attack buttons
                 if (attackButtons[i] != null && attackButtons[i].mouseHoveringOver() && menuType){
@@ -276,6 +284,7 @@ public class BattleWorld extends World
         
     }
     
+    
     // For the enemy to attack
     public void enemyAttack(){
         
@@ -286,6 +295,7 @@ public class BattleWorld extends World
             if (attackCounter >= 2 && pPokemon.health<=0){
                 returnToMenu();
             }   else if (attackCounter >= 2 && ePokemon.health <=0){
+                soundplayer.stopWildPokemonBattle();
                 returnToWorld();
             }
             if (pPokemon.health <= 0){
@@ -307,10 +317,12 @@ public class BattleWorld extends World
             return;
         }
         
+        
         // Enemy AI (and by ai i mean it just uses the first move)
         pPokemon.health -= ePokemon.moveDmg[0];
         playerHP.curHealth = pPokemon.health;
         playerHP.hpBar.update(pPokemon.health);
+        System.out.println(pPokemon.health);
         
         // attack prompt and animation
         SuperTextBox attackText = new SuperTextBox("The "+ ePokemon.pokemonSpecies + " used " +  ePokemon.moves[0], new Font(false, false, 16), 250);

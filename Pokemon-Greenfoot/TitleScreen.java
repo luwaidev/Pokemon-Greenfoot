@@ -8,11 +8,15 @@ import java.util.ArrayList;
  * @author Nathan Thian
  * @version April 24, 2022
  */
+
 public class TitleScreen extends World
 {
     //the font that is used for everything
     Font boringFont = new Font ("Times New Roman", false, false, 14);
 
+    //class that plays sound
+    SoundPlayer soundplayer = new SoundPlayer();
+    
     //class that stores all save information
     Storer storer = new Storer();
 
@@ -65,6 +69,9 @@ public class TitleScreen extends World
     {    
         // Create a new world with 800x500 cells with a cell size of 1x1 pixels.
         super(800, 500, 1); 
+        
+        //plays music
+        soundplayer.playTitleScreenMusic();
 
         //sets the background
         setBackground(background);
@@ -300,13 +307,14 @@ public class TitleScreen extends World
                     }
                     if(Storer.getSave(selected.getValue(),2) == -1)
                     {
-                        pokemonHealth = 100;
+                        pokemonHealth = 20;
                     } else
                     {
                         pokemonHealth = Storer.getSave(selected.getValue(),2);
                     }
                 }
             }
+            soundplayer.stopTitleScreenMusic();
             Town world = new Town(locationX,locationY,pokemonHealth);
             Greenfoot.setWorld(world);
         }

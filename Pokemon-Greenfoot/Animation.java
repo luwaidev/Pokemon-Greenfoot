@@ -1,6 +1,10 @@
 import greenfoot.*; // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.util.HashMap;
 
+/**
+ * @author Lu Wai
+ * @version June 24, 2022
+ */
 class Animation {
     private String name;
     public GreenfootImage[] nonDirectionalImages;
