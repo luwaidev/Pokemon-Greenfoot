@@ -441,11 +441,14 @@ public class Town extends World
                 try{
                     //if the grid you are trying to move to is 1 (path) or 2 (grass block)...
                     if(theMovementGrid[gridPosX][gridPosY-1] == 1 || theMovementGrid[gridPosX][gridPosY-1] == 2)
-                    {
+                    { 
+                        enterHouse(); 
                         //if the grid you are trying to move to is 3 (a door that leads to somewhere)
                         if(theMovementGrid[gridPosX][gridPosY-1] == 3)
                         {
-                            //put in code to go into new world
+                            //put in code to go into new world 
+                            System.out.println("hi"); 
+                            enterHouse(); 
                         }
                         //sets the currently moving to true
                         moving = true;
@@ -595,6 +598,10 @@ public class Town extends World
             Storer.setSave(4,1,-1);
             Storer.setSave(4,2,-1);
         }
+    }
+    
+    public void enterHouse(){
+        Greenfoot.setWorld(new House()); 
     }
 
     /**
