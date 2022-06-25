@@ -38,7 +38,7 @@ public class House extends World
     public void addPlayer(){
         originalX = x; 
         originalY = y; 
-        scroller = new Scroller(this, houseBackground, 600, 400);
+        scroller = new Scroller(this, houseBackground, 500, 400);
         scrollActor = new Player();
         addObject(scrollActor, x, y);
         Player.originalX = originalX;

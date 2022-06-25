@@ -377,6 +377,7 @@ public class Town extends World
                         if(theMovementGrid[gridPosX+1][gridPosY] == 3)
                         {
                             //put in code to go into new world
+                            
                         }
                         //sets the currently moving to true
                         moving = true;
@@ -446,6 +447,7 @@ public class Town extends World
                         if(theMovementGrid[gridPosX][gridPosY-1] == 3)
                         {
                             //put in code to go into new world
+                            enterHouse(); 
                         }
                         //sets the currently moving to true
                         moving = true;
@@ -632,5 +634,9 @@ public class Town extends World
             //checks pause methods
             checkPause();
         }
+    }
+    
+    public void enterHouse(){
+        Greenfoot.setWorld(new House()); 
     }
 }
