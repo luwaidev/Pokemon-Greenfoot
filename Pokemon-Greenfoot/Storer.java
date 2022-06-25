@@ -1,3 +1,12 @@
+import java.util.Random;
+import java.util.Scanner;
+import java.util.NoSuchElementException;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.StringTokenizer;
+import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.io.IOException;
 /**
  * This class saves all the information about save files
  * 
@@ -6,6 +15,22 @@
  */
 public class Storer  
 {
+    private static Scanner s;
+    private static Scanner adder;
+    private static Scanner fileNameReader = new Scanner(System.in);
+    private static String fileName;
+    private static boolean hasFoundFile;
+    private static boolean hasMadeDecision = false;
+    private static StringTokenizer tokenizer;
+    private static String[] customers;
+    private static String[] newCustomers;
+    private static String add;
+    private static int numLines;
+    private static boolean moreLines;
+    private static boolean addMoreLines;
+    private static Scanner all = new Scanner(System.in);
+    private static int decision;
+
     //value that is returned...just initializing
     private static int value;
     //note locations x and y in these arrays go off the grid not actual location
@@ -14,7 +39,6 @@ public class Storer
     private static int[] saveTwo = {-1,-1,-1};
     private static int[] saveThree = {-1,-1,-1};
     private static int[] saveFour = {-1,-1,-1};
-    
 
     /**
      * Constructor for objects of class Storer
@@ -22,70 +46,116 @@ public class Storer
     public Storer()
     {
     }
-    
+
     /**
-     * returns the save file information at specified points
-     * x is the save file number (1,2,3,4)
-     * y is the index of the save file's array
-     * (0 is x location)
-     * (1 is y location)
-     * (3 is pokemon health)
+     * This method returns the save information at the specific save number x and the index y
      */
     public static int getSave(int x, int y)
     {
-        //if the first save file is the one selected...
-        if(x == 1)
+        //gets the file name and makes two scanners associated with the file
+        try{
+            fileName = "waitlist.txt";
+            s = new Scanner(new File(fileName));
+            adder = new Scanner(new File(fileName));
+        } catch (FileNotFoundException e)
         {
-            //return integer stored at index y of the first array
-            value = saveOne[y];
-        } else if(x == 2)
-        {
-            //if the second save file is the one selected...
-            //return integer stored at index y of the second array
-            value = saveTwo[y];
-        } else if(x == 3)
-        {
-            //if the third save file is the one selected...
-            //return integer stored at index y of the third array
-            value = saveThree[y];
-        } else if(x == 4)
-        {
-            //if the fourth save file is the one selected...
-            //return integer stored at index y of the fourth array
-            value = saveFour[y];
+            System.out.println("File not found");
+            System.exit(1);
         }
+        //gets the number of lines in the text file and makes an array the size of the number of lines
+        numLines = 0;
+        moreLines = true;
+        while(moreLines)
+        {
+            try{
+                s.nextLine();
+                numLines++;
+            } catch (NoSuchElementException e)
+            {
+                moreLines = false;
+                customers = new String[numLines];
+            }
+        }
+        //adds each line of the text file as one string in the array
+        numLines = 0;
+        addMoreLines = true;
+        while(addMoreLines)
+        {
+            try{
+                customers[numLines] = adder.nextLine();
+                numLines++;
+            } catch (NoSuchElementException e)
+            {
+                addMoreLines = false;
+            }
+        }
+        //returns the string at the specified index of the array as an integer
+        value = Integer.parseInt(customers[(x-1)*3+y]);
         return value;
     }
-    
+
     /**
-     * This method sets the integers in the specified array to the specified integer
-     * used when creating/overwriting save files
-     * x is the save file number (1,2,3,4)
-     * y is the index of the save file (what each one represents specified above)
-     * z is the integer that is being inserted
+     * This method changes a value in the specified save file x at index y to be z
      */
     public static void setSave(int x, int y, int z)
     {
-        //if first save file array is chosen
-        if(x == 1)
+        //gets the file and makes two scanners associated with it
+        fileName = "waitlist.txt";
+        try{
+            s = new Scanner(new File(fileName));
+            adder = new Scanner(new File(fileName));
+        } catch (FileNotFoundException e)
         {
-            //sets the integer at index y to be z at this array
-            saveOne[y] = z;
-        } else if(x == 2)
+            System.out.println("File not found");
+            System.exit(1);
+        }
+        //counts the number of lines in the file and makes an array the size of the number of lines
+        numLines = 0;
+        moreLines = true;
+        int counter = 1;
+        while(moreLines)
         {
-            //if second save file array is chosen
-            //sets the integer at index y to be z at this array
-            saveTwo[y] = z;
-        } else if(x == 3)
+            try{
+                s.nextLine();
+                counter++;
+                numLines++;
+            } catch (NoSuchElementException e)
+            {
+                moreLines = false;
+                customers = new String[numLines];
+            }
+        }
+        //adds each line of the file to the array
+        numLines = 0;
+        addMoreLines = true;
+        while(addMoreLines)
         {
-            //if third save file array is chosen
-            //sets the integer at index y to be z at this array
-            saveThree[y] = z;
-        } else if(x == 4)
+            try{
+                customers[numLines] = adder.nextLine();
+                numLines++;
+            } catch (NoSuchElementException e)
+            {
+                addMoreLines = false;
+            }
+        }
+        //changes the value at the specified index of the array to be z
+        int toBeRemoved = (x-1)*3 + y;
+        Integer num = z;
+        customers[toBeRemoved] = num.toString();
+        //rewrites the whole text file but with the changed value implemented
+        try{
+            FileWriter out = new FileWriter(fileName);
+            PrintWriter output = new PrintWriter (out);
+            s = new Scanner(new File(fileName));
+            adder = new Scanner(new File(fileName));
+            for(int i = 0;i<numLines;i++)
+            {
+                output.println(customers[i]);
+            }
+            output.close();
+        } catch (IOException e)
         {
-            //if fourth save file array is chosen
-            //sets the integer at index y to be z at this array
-            saveFour[y] = z;
+            System.out.println("Error: " + e);
         }
     }
 }

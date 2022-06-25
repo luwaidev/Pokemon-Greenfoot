@@ -2,11 +2,11 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 import java.util.ArrayList;
 
 /**
- * This is the titlescreen before you get into the game
- * You can change the save file you want before going into the game
+ * This is the titlescreen before you get into the simulation
+ * You can change the number of each element you want inside before the sim starts
  * 
  * @author Nathan Thian
- * @version June 15, 2022
+ * @version April 24, 2022
  */
 public class TitleScreen extends World
 {
@@ -15,7 +15,7 @@ public class TitleScreen extends World
 
     //class that stores all save information
     Storer storer = new Storer();
-    
+
     //these variables keep track of the mouse's position on the screen
     private int mx = 0;
     private int my = 0;
@@ -25,8 +25,8 @@ public class TitleScreen extends World
     SuperTextBox saveButtonTwo;
     SuperTextBox saveButtonThree;
     SuperTextBox saveButtonFour;
-    
-    //these are variables that will be used to initialize the town world
+
+    //these are the variables that will be used to initialize the town world
     private int locationX;
     private int locationY;
     private int pokemonHealth;
@@ -72,7 +72,7 @@ public class TitleScreen extends World
         //intro has not happened so done intro is false
         doneIntro = false;
 
-        //intialize pokemon logo
+        //initialize pokemon logo
         pokemon = new TitlePictures();
         pokemon.setImage(pokemonPic);
         //scale that works best on the picture
@@ -80,7 +80,7 @@ public class TitleScreen extends World
         //added to top left of the world
         addObject(pokemon,0,125);
 
-        //currently logo is transparent
+        //curently logo is transparent
         transparencies = 0;
 
         //sets width and height of variables according to picture
@@ -89,14 +89,12 @@ public class TitleScreen extends World
 
         //gets all the items on screen ready
         prepare();
+
     }
 
-    /**
-     * This method puts pokemon logo onto the screen and makes everything visible after
-     */
     public void pokemonOntoScreen()
     {
-        //if the pokemon has not reached desired width and height yet...
+        //if the pokemon logo has not reached desired width and height yet...
         if(pokemonWidth < 790)
         {
             //increase width and height to simulate getting bigger
@@ -145,13 +143,12 @@ public class TitleScreen extends World
             //starts game with selected options if user presses <space>
             startMethod();
         }
-
     }
 
     public void putSelections()
     {
         //adding boxes that you can click for customizing
-        //sets buttons' values according to which save file they represent
+        //sets buttons' values corresponding to the values set in the variables created during initialization
         saveButtonOne = new SuperTextBox("Save One",Color.WHITE, Color.BLACK, boringFont,true,this.getWidth()/10,1,Color.BLACK); 
         saveButtonOne.setValue(1);
         addObject(saveButtonOne, getWidth()/5, getHeight()*5/6);
@@ -188,7 +185,8 @@ public class TitleScreen extends World
     private void prepare()
     {
         // labels for title and extra labels
-        label2 = new Label("Press <space> to start", 40);
+
+        label2 = new Label("Press <shift> to start", 40);
         addObject(label2,getWidth()/2,getHeight()*2/4);
         label2.setFillColor(Color.BLACK);
         label2.getImage().setTransparency(0);
@@ -261,9 +259,10 @@ public class TitleScreen extends World
                 //if this specific button is indeed selected...
                 for(SuperTextBox yes : saveFiles)
                 {
+                    //if this specific button is a cherry button
                     if(yes.equals(textBox))
                     {
-                        //move the rectangle that darkens the selection to this specific button
+                        //move the cherry rectangle that darkens the selection to this specific button
                         saveSelected.setLocation(yes.getX(),yes.getY());
                     }
                 }
@@ -272,25 +271,24 @@ public class TitleScreen extends World
     }
 
     /**
-     * this method will transition the simulation from title screen into the actual game when space bar is pressed
+     * this method will transition the simulation from title screen into the actual simulation when space bar is pressed
      */
     public void startMethod()
     {
-        if(Greenfoot.isKeyDown("space"))
+        if(Greenfoot.isKeyDown("shift"))
         {
-            //loop through every different array of the different components' buttons
+            //loop through every different array 
             for(SuperTextBox selected : saveFiles)
             {
-                //gets the selected box and gets the information from the corresponding save file
+                //get the selected save file and use that one's parameters for the world
                 if(selected.checkSelected())
                 {
-                    //if there is not a save on that save file use generic starting code
+                    //if no save file use generic settings
                     if(Storer.getSave(selected.getValue(),0) == -1)
                     {
                         locationX = 65;
                     } else
                     {
-                        //sets the x location of the player to the specific save file array's index 0
                         locationX = Storer.getSave(selected.getValue(),0);
                     }
                     if(Storer.getSave(selected.getValue(),1) == -1)
@@ -298,7 +296,6 @@ public class TitleScreen extends World
                         locationY = 65;
                     } else
                     {
-                        //sets the y location of the player to the specific save file array's index 1
                         locationY = Storer.getSave(selected.getValue(),1);
                     }
                     if(Storer.getSave(selected.getValue(),2) == -1)
@@ -306,21 +303,15 @@ public class TitleScreen extends World
                         pokemonHealth = 100;
                     } else
                     {
-                        //sets the current health of the pokemon to the specific save file array's index 2
                         pokemonHealth = Storer.getSave(selected.getValue(),2);
                     }
                 }
             }
-            //initialize the world with save file/generic code's information
             Town world = new Town(locationX,locationY,pokemonHealth);
-            //move to the new world
             Greenfoot.setWorld(world);
         }
     }
 
-    /**
-     * This method is called when world is started. It scales pokemon logo image properly
-     */
     public void started () {
         pokemonPic.scale(200,100);
     }
