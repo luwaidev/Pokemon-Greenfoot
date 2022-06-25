@@ -377,7 +377,6 @@ public class Town extends World
                         if(theMovementGrid[gridPosX+1][gridPosY] == 3)
                         {
                             //put in code to go into new world
-                            
                         }
                         //sets the currently moving to true
                         moving = true;
@@ -395,7 +394,6 @@ public class Town extends World
                             boolean fight = random.nextBoolean();
                             if(fight)
                             {
-                                enterBattle();
                                 //put in code to go into battle mode
                             }
                         }
@@ -430,7 +428,6 @@ public class Town extends World
                             boolean fight = random.nextBoolean();
                             if(fight)
                             {
-                                enterBattle();
                                 //put in code to go into battle mode
                             }
                         }
@@ -444,11 +441,13 @@ public class Town extends World
                 try{
                     //if the grid you are trying to move to is 1 (path) or 2 (grass block)...
                     if(theMovementGrid[gridPosX][gridPosY-1] == 1 || theMovementGrid[gridPosX][gridPosY-1] == 2)
-                    {
+                    { 
+                        enterHouse(); 
                         //if the grid you are trying to move to is 3 (a door that leads to somewhere)
                         if(theMovementGrid[gridPosX][gridPosY-1] == 3)
                         {
-                            //put in code to go into new world
+                            //put in code to go into new world 
+                            System.out.println("hi"); 
                             enterHouse(); 
                         }
                         //sets the currently moving to true
@@ -466,7 +465,6 @@ public class Town extends World
                             boolean fight = random.nextBoolean();
                             if(fight)
                             {
-                                enterBattle();
                                 //put in code to go into battle mode
                             }
                         }
@@ -501,7 +499,6 @@ public class Town extends World
                             boolean fight = random.nextBoolean();
                             if(fight)
                             {
-                                enterBattle();
                                 //put in code to go into battle mode
                             }
                         }
@@ -603,10 +600,10 @@ public class Town extends World
         }
     }
     
-    public void enterBattle(){
-        BattleWorld world = new BattleWorld(gridPosX, gridPosY, pokemonHealth);
-        Greenfoot.setWorld(world);
+    public void enterHouse(){
+        Greenfoot.setWorld(new House()); 
     }
+
     /**
      * Act method keeps track of all the methods that go on real time
      * movement, pausing, scrolling etc.
@@ -642,9 +639,5 @@ public class Town extends World
             //checks pause methods
             checkPause();
         }
-    }
-    
-    public void enterHouse(){
-        Greenfoot.setWorld(new House()); 
     }
 }

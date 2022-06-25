@@ -18,6 +18,35 @@ public class Player extends Actor
      */
     public void act()
     {
+        movePlayer(); 
+    }
+    
+    public void movePlayer(){
+        
+        if(Greenfoot.isKeyDown("right")){
+            setRotation(0); 
+            move(2); 
+        }
+        if(Greenfoot.isKeyDown("down")){
+            setRotation(90); 
+            move(2); 
+        }
+        if(Greenfoot.isKeyDown("up")){
+            setRotation(270); 
+            move(2); 
+        }
+        if(Greenfoot.isKeyDown("left")){
+            setRotation(180); 
+            move(2); 
+        }
+        /*if(Player.class != null){
+            System.out.println("bruh"); 
+        }*/
+        if(isTouching(Door.class)){
+            System.out.println("Touched door"); 
+            Greenfoot.setWorld(new Town(300, 200, 1)); 
+        }
         
     }
+    
 }

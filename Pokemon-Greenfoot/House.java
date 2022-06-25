@@ -8,12 +8,15 @@ import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
  */
 public class House extends World
 {
-    //background of house 
+    //objects of house 
     GreenfootImage houseBackground = new GreenfootImage("home.png"); 
     
     //objects for scroller
     Scroller scroller; 
     Player scrollActor; 
+    
+    //object for door
+    Door door; 
     
     //X and Y coords set for player 
     static int originalX= 0, originalY = 0; 
@@ -21,6 +24,7 @@ public class House extends World
     
     //world constant 
     public static final int HIGH = 400, WIDE = 500; 
+    boolean inHouse = true; 
     /**
      * Constructor for objects of class House.
      * 
@@ -28,34 +32,26 @@ public class House extends World
     public House()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
-        super(600, 400, 1, false);
+        super(500, 400, 1);
         this.x = x; 
         this.y = y; 
         
         setBackground(houseBackground); 
+        addPlayer();  
+        
+        door = new Door(); 
+        addObject(door, 450, 200); 
     }
     
     public void addPlayer(){
-        originalX = x; 
-        originalY = y; 
-        scroller = new Scroller(this, houseBackground, 500, 400);
-        scrollActor = new Player();
-        addObject(scrollActor, x, y);
-        Player.originalX = originalX;
-        Player.originalY = originalY;
-        Player.worldX = originalX;
-        Player.worldY = originalY;
-        Player.speed = 2;
-        scroll();
+        scrollActor = new Player(); 
+        addObject(scrollActor, 200, 300); 
     }
     
-    public void scroll(){
-        if(scrollActor != null)
-        {
-            int dsX = scrollActor.getX() - WIDE / 2;
-            int dsY = scrollActor.getY() - HIGH / 2;
-            scroller.scroll(dsX, dsY);
+    public void leaveHouse(){
+        if(Player.class != null){
+            System.out.println("Bruh"); 
+            Greenfoot.setWorld(new Town(50, 30, 1)); 
         }
     }
-    
 }
